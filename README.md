@@ -14,9 +14,7 @@
 
 # Getting Started
 
-> If you are ___customer___ who has no experience using this app, click [here.](#customer)
-
-Otherwise, click on the description that best describes you!
+> Click on the description that best describes you!
 
 ### [Customer](#customer)
 
