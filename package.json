@@ -15,12 +15,11 @@
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
-    "serve": "^11.0.0",
     "styled-components": "^4.2.0"
   },
   "scripts": {
     "start": "craco start",
-    "build": "craco build && npx workbox injectManifest && yarn serve",
+    "build": "craco build && npx workbox injectManifest",
     "test": "craco test",
     "serve": "serve -s build",
     "storybook": "start-storybook -p 9009 -s public",
@@ -54,6 +53,7 @@
     "react-app-rewired": "^2.1.1",
     "storybook-addon-material-ui": "^0.9.0-alpha.17",
     "sw-precache": "^5.2.1",
-    "workbox-cli": "^4.2.0"
+    "workbox-cli": "^4.2.0",
+    "serve": "^11.0.0"
   }
 }
