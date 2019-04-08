@@ -1507,10 +1507,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@craco/craco@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@craco/craco/-/craco-4.0.1.tgz#b9afd218e4f566c2cd83a94e6532ee8e789f451e"
-  integrity sha512-cJOjPPGyzX2cIuLcSwDT0wQadtJRjzIFVoEPI/JF8o+PpxAmbw9p4rtp88TqoytP04cIDwq49dQEv4oX4vLSTg==
+"@craco/craco@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@craco/craco/-/craco-4.1.0.tgz#f8ffbce0324c2d68fd025291a8c1866359bbecfd"
+  integrity sha512-yaCjyC2GKFsAMZRtBkB61ZSAPcuEn5U3PKRTc+Cwy0IW5KgLDposutT9np44AfaZXOw1kd9Z0bgy+f0HiB9vNg==
   dependencies:
     cross-spawn "6.0.5"
     lodash.mergewith "4.6.1"
