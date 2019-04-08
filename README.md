@@ -102,7 +102,7 @@ This application is a PWA (Progressive Website Application) that is developed in
 
 It was boostrapped with [Create React App 2.0](https://facebook.github.io/create-react-app/). CRA has been rewired so that its configuration is  accessible by [craco](https://www.npmjs.com/package/@craco/craco), This allows us to tweak and add additional functionality into the default Webpack configuration. [Webpack](https://webpack.js.org/) in CRA is responsible for bundling, linting, shaking and splitting code for making the app as lightweight as possible.
 
-The PWA also employs an experimental service worker using Google's [Workbox](https://developers.google.com/web/tools/workbox/) to enable offline support for users where it is possible. Offline satisfied by [IndexedDB](https://caniuse.com/#feat=indexeddb) with fallbacks for [WebSQL](https://caniuse.com/#search=websql), and [LocalStorage](https://caniuse.com/#search=localstorage), depending on the user's device.
+The PWA also employs an experimental service worker using Google's [Workbox](https://developers.google.com/web/tools/workbox/) to enable offline support for users where it is possible. Offline support is satisfied by [IndexedDB](https://caniuse.com/#feat=indexeddb) with fallbacks for [WebSQL](https://caniuse.com/#search=websql), and [LocalStorage](https://caniuse.com/#search=localstorage), depending on the user's device.
 
 > This app is still [experimental](), so some of these features may change as the application or device support changes. Features have been selected to be as future-proof as possible with fallbacks at the expense of bundle size and speed.
 
@@ -120,9 +120,9 @@ We are using VSCode! :)
 
 ## Quick Start
 
-Once you have clone the repository from the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues), open the root directory in VSCode. You should have access the `public` and `src` folders. Make sure you are cd'd properly into this directory before you try to run any commands.
+Once you have cloned the repository from the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues), open the root directory in VSCode. You should have access the `public` and `src` folders. Make sure you are cd'd properly into this directory before you try to run any commands.
 
-We are using [yarn](https://yarnpkg.com/en/) as our package manger, but you may use `npm` or `npx` as desired, just make sure you preprend your command with 'run'.
+We are using [yarn](https://yarnpkg.com/en/) as our package manger, but you may use `npm` or `npx` as desired, just make sure you prepend your command with 'run'.
 
 | Package Manager | Command |
 | --- | --- |
@@ -136,7 +136,9 @@ See [Migrating from NPM](https://yarnpkg.com/lang/en/docs/migrating-from-npm/).
 
 ## Install
 
-This is the first command you should run after cloning the repo. It will build the `node_modules` directory and download all necessary packages needed for development as specified in `package.json`.
+This is the first command you should run after cloning the repo. It will build the `node_modules` directory and download all necessary packages needed for development as specified in [package.json](https://github.com/HarvestHaven/Harvest-Haven-Store/blob/master/package.json).
+
+    yarn install
 
 ## Start
 
@@ -144,4 +146,39 @@ Runs the application in `development` mode but [does not attach the service work
 
     yarn start
 
+> View app in browser at [localhost:3000](http://localhost:3000/)
+
 ## Build
+
+Runs the application in `production` mode and is optimized for performance, as it has been bundled and cleaned by `Webpack`. It is served locally and a service worker is attached using `Workbox`
+
+    yarn build
+
+> View app in browser at [localhost:5000](http://localhost:5000/)
+
+## 
+
+## Deploy
+
+Triggers a build on [Netlify](https://www.netlify.com/) and / or [Heroku](https://www.netlify.com/). Netlify will monitor the repo and on pushes to the working branch will package, bundle, clean and host the app on their servers.
+
+    yarn deploy
+
+> View app in browser at [hhstore.netlify.com](http://www.hhstore.netlify.com/) or [hhstore.herokuapp.com](http://www.hhstore.herokuapp.com/)
+
+## Test
+
+Runs the application in `test` mode. CRA by default uses [jest]() at its test runner. See [Running Tests](https://facebook.github.io/create-react-app/docs/running-tests).
+
+    yarn test
+
+## Other Commands
+
+Less used but still important to development are the following: 
+
+| Command | Purpose |
+| --- | --- | 
+| `yarn serve` | Quickly host the contents of the `build` director at [localhost:5000](http://localhost:5000/)|
+| `yarn build-storybook` | Take your storybook and builds a static site|
+| `yarn eject` | **NEVER** use this! Use at your own [risk!](https://facebook.github.io/create-react-app/docs/alternatives-to-ejecting) |
+
