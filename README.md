@@ -20,7 +20,7 @@
 
 ### [Owner]()
 
-### [Coder]()
+### [Coder](#developer)
 
 # Customer
 
@@ -74,3 +74,74 @@ Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend ri
       - [__Firefox__](#how-to-install)
 
 ##### [[back to Customer]](#New-Customer)
+
+---
+
+
+# Developer
+
+__This is the [developer]() section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
+
+---
+
+> __Note for all developers:__ If you are having trouble of any kind, tag [Braden](https://github.com/Braden-Preston) or [Michael](https://github.com/MikePreston17) or submit an issue to the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues).
+
+### Navigation
+
+- [__Basic Information__](#basic-information)
+- [__Development Tools__](#development-tools)
+- [__Quick Start__](#quick-start)
+- [__Required Features__](#development)
+- [__Package Purposes__](#development)
+
+---
+
+## Basic Information
+
+This application is a PWA (Progressive Website Application) that is developed in JavaScript using the Node Framework. It employs a serverless stack that is most closely aligned with the MERN stack.
+
+It was boostrapped with [Create React App 2.0](https://facebook.github.io/create-react-app/). CRA has been rewired so that its configuration is  accessible by [craco](https://www.npmjs.com/package/@craco/craco), This allows us to tweak and add additional functionality into the default Webpack configuration. [Webpack](https://webpack.js.org/) in CRA is responsible for bundling, linting, shaking and splitting code for making the app as lightweight as possible.
+
+The PWA also employs an experimental service worker using Google's [Workbox](https://developers.google.com/web/tools/workbox/) to enable offline support for users where it is possible. Offline satisfied by [IndexedDB](https://caniuse.com/#feat=indexeddb) with fallbacks for [WebSQL](https://caniuse.com/#search=websql), and [LocalStorage](https://caniuse.com/#search=localstorage), depending on the user's device.
+
+> This app is still [experimental](), so some of these features may change as the application or device support changes. Features have been selected to be as future-proof as possible with fallbacks at the expense of bundle size and speed.
+
+---
+
+## Development Tools
+
+TBA
+
+We are using VSCode! :)
+
+##### [[back to Developer Navigation]](#navigation)
+
+---
+
+## Quick Start
+
+Once you have clone the repository from the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues), open the root directory in VSCode. You should have access the `public` and `src` folders. Make sure you are cd'd properly into this directory before you try to run any commands.
+
+We are using [yarn](https://yarnpkg.com/en/) as our package manger, but you may use `npm` or `npx` as desired, just make sure you preprend your command with 'run'.
+
+| Package Manager | Command |
+| --- | --- |
+| **`yarn`** | `yarn` test |
+| **`npm`** | `npm` run test |
+| **`npx`** | `npx` run test |
+
+See [Migrating from NPM](https://yarnpkg.com/lang/en/docs/migrating-from-npm/).
+
+---
+
+## Install
+
+This is the first command you should run after cloning the repo. It will build the `node_modules` directory and download all necessary packages needed for development as specified in `package.json`.
+
+## Start
+
+Runs the application in `development` mode but [does not attach the service worker](). This mode is perfect for UI and UX development, but not for adjusting service worker or caching functionality. Run and serve a static [build](#build) for that.
+
+    yarn start
+
+## Build
