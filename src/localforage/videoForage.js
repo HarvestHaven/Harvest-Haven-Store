@@ -8,42 +8,49 @@ export default class VideoForage {
     }
 
     init = async () => {
-        console.log(this.$)
+        // console.log(this.$)
         const that = this
         const key = 'Cat'
         this.$.setItem('key', key)
-        .then(function (value) {
-            that.$.getItem('key');
-            console.log(`Set Video [${key}] as '${value}'`)
-            // we got our value
-        }).catch(function (err) {
-            console.log(err)
-            // we got an error
-        });
+            .then(function (value) {
+                that.$.getItem('key');
+                console.log(`Set Video [${key}] as '${value}'`)
+                // we got our value
+            }).catch(function (err) {
+                console.log(err)
+                // we got an error
+            });
     }
 
     get = async () => {
-        fetch('/test').then((response) => {
-            console.log(response)
-            console.log(response.body)
-            console.log(`Fetch --> Response: ${response.body}`)
-          })
-    } 
+        const fetchURLS = [
+            'https://www.youtube.com/watch?v=tINcLrUEFV0&t=66',
+            'https://www.youtube.com/watch?v=tINcLrUEFV0',
+            'https://www.youtube.com/watch?v=J57KCTvZ7Lc',
+            'https://www.youtube.com/watch?v=fLjslMtjkhs',
+            'https://www.youtube.com/watch?v=Bgu7f5cq6cQ',
+            'https://www.youtube.com/watch?v=fLjslMtjkhs&feature=youtu.be&t=43'
+        ]
+        await fetchURLS.map(
+            async (url) =>
+                await fetch(url)
+        )
+    }
 
     clear = async () => {
-        this.$.clear().then(function() {
+        this.$.clear().then(function () {
             // Run this code once the database has been entirely deleted.
             console.log('Database is now empty.');
-        }).catch(function(err) {
+        }).catch(function (err) {
             // This code runs if there were any errors
             console.log(err);
         });
     }
 
     drop = async () => {
-        this.$.dropInstance().then(function() {
+        this.$.dropInstance().then(function () {
             console.log('Dropped the store of the current instance');
-          });
+        });
     }
 
 }

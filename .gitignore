@@ -16,6 +16,7 @@ lib-cov
 
 # CRA
 build
+!.storybook
 
 # Coverage directory used by tools like istanbul
 coverage
