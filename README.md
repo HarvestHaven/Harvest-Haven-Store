@@ -28,7 +28,7 @@ Hello there valued customer! If you are not very tech savy or you have never use
 
 - [__What Is This App?__](#whats-new?)
 - [__Features__](#features)
-- [__Is My Device Compatible?__](#how-to-install)
+- [__Is My Device Compatible?__](#is-my-device-compatible)
 - [__How to Install__](#features)
 - [__Using the App__](#how-to-install)
 
@@ -44,6 +44,31 @@ The Harvest Haven App is a special website that can anyone can take with them wh
 - Watch videos about Grander, food production and health devices on the go.
 - Save and download your favorite videos for when you don't have access to the internet.
 - Have the ability to share what you have learned with your friends and neighbors in person.
+
+##### [[back to Customer]](#New-Customer)
+
+---
+
+## Is My Device Compatible?
+
+>***Devices tested so far...***
+
+`Desktop`
+    
+    Windows
+        Chrome 73+ ?
+    Mac OS
+        Chrome 73+
+
+`Mobile`
+
+    Android
+        Chrome 73+
+        Firefox 66+
+
+##### [[back to Customer]](#New-Customer)
+
+---
 
 ## How To Install
 
