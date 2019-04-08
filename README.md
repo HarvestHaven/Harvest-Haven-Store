@@ -101,7 +101,7 @@ __This is the [developer]() section and is NOT for the faint of heart or for our
 
 This application is a PWA (Progressive Website Application) that is developed in JavaScript using the Node Framework. It employs a serverless stack that is most closely aligned with the MERN stack.
 
-It was boostrapped with [Create React App 2.0](https://facebook.github.io/create-react-app/). CRA has been rewired so that its configuration is  accessible by [craco](https://www.npmjs.com/package/@craco/craco), This allows us to tweak and add additional functionality into the default Webpack configuration. [Webpack](https://webpack.js.org/) in CRA is responsible for bundling, linting, shaking and splitting code for making the app as lightweight as possible.
+It was bootstrapped with [Create React App 2.0](https://facebook.github.io/create-react-app/). CRA has been rewired so that its configuration is  accessible by [craco](https://www.npmjs.com/package/@craco/craco), This allows us to tweak and add additional functionality into the default Webpack configuration. [Webpack](https://webpack.js.org/) in CRA is responsible for bundling, linting, shaking and splitting code for making the app as lightweight as possible.
 
 The PWA also employs an experimental service worker using Google's [Workbox](https://developers.google.com/web/tools/workbox/) to enable offline support for users where it is possible. Offline support is satisfied by [IndexedDB](https://caniuse.com/#feat=indexeddb) with fallbacks for [WebSQL](https://caniuse.com/#search=websql), and [LocalStorage](https://caniuse.com/#search=localstorage), depending on the user's device.
 
@@ -121,7 +121,7 @@ We are using VSCode! :)
 
 ## Quick Start
 
-Once you have cloned the repository from the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues), open the root directory in VSCode. You should have access the `public` and `src` folders. Make sure you are cd'd properly into this directory before you try to run any commands.
+Once you have cloned the repository from the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues), open the root directory in VSCode. You should have access to the `public` and `src` folders. Make sure you are cd'd properly into this directory before you try to run any commands.
 
 We are using [yarn](https://yarnpkg.com/en/) as our package manger, but you may use `npm` or `npx` as desired, just make sure you prepend your command with 'run'.
 
@@ -219,10 +219,10 @@ The following features are required to create the minimum viable product as requ
 | [`@material-ui/icons`](https://www.npmjs.com/package/@material-ui/icons) | ^3.0.2 | Large package containing Material Design Icons |
 | [`@material-ui/styles`](https://www.npmjs.com/package/@material-ui/styles) | ^3.0.0-alpha.10 | Material-UI's custom implementation of JSS among other feature support such as `styled-components` |
 | [`@material-ui/system`](https://www.npmjs.com/package/@material-ui/system) | ^3.0.0-alpha.2 | Experimental but extremely useful component composition helper library. |
-| [`localforage`](https://www.npmjs.com/package/localforage) | ^1.7.3 | IndexdedDB storage simplified, with fallback for other persistant browser storage types |
+| [`localforage`](https://www.npmjs.com/package/localforage) | ^1.7.3 | IndexedDB storage simplified, with fallback for other persistant browser storage types |
 | [`mobx`](https://www.npmjs.com/package/mobx) | ^5.9.0 | Property access management library for implementing reactive components & observable states |
 | [`mobx-react`](https://www.npmjs.com/package/`mobx-react) | ^5.4.3 | React style bindings for MobX, such as `@inject` and `@observer` |
-| [`react`](https://www.npmjs.com/package/react) | ^16.8.6 | Efficient Virtual DOM managmeent library for class based UI components |
+| [`react`](https://www.npmjs.com/package/react) | ^16.8.6 | Efficient Virtual DOM managment library for class based UI components |
 | [`react-dom`](https://www.npmjs.com/package/react-dom) | ^16.8.6 | Render compoents manually to browser DOM without exisiting React DOM |
 | [`react-router-dom`](https://www.npmjs.com/package/react-router-dom) | ^5.0.0 | Simplified bindings for react-router, such as `BrowserRouter` |
 | [`react-scripts`](https://www.npmjs.com/package/react-scripts) | 2.1.8 | Create React App's bundled collection of scripts for development and production |
@@ -258,7 +258,7 @@ The following features are required to create the minimum viable product as requ
 
 **As described when observing the `src` directory, not as a final bundled build.**
 
-*** This chapter is quicky subject to change and modification
+*** This chapter is quickly subject to change and modification
 
 ### Initalization
 
