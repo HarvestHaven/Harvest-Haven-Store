@@ -91,8 +91,8 @@ __This is the [developer]() section and is NOT for the faint of heart or for our
 - [__Basic Information__](#basic-information)
 - [__Development Tools__](#development-tools)
 - [__Quick Start__](#quick-start)
-- [__Required Features__](#development)
-- [__Package Purposes__](#development)
+- [__Required Features__](#required-features)
+- [__Package Purposes__](#packages)
 
 ---
 
@@ -178,7 +178,56 @@ Less used but still important to development are the following:
 
 | Command | Purpose |
 | --- | --- | 
-| `yarn serve` | Quickly host the contents of the `build` director at [localhost:5000](http://localhost:5000/)|
-| `yarn build-storybook` | Take your storybook and builds a static site|
-| `yarn eject` | **NEVER** use this! Use at your own [risk!](https://facebook.github.io/create-react-app/docs/alternatives-to-ejecting) |
+| `serve` | Quickly host the contents of the `build` director at [localhost:5000](http://localhost:5000/)|
+| `build-storybook` | Takes your storybook and builds a static site that can be served|
+| `eject` | **NEVER** use this! Use at your own [risk!](https://facebook.github.io/create-react-app/docs/alternatives-to-ejecting) |
 
+##### [[back to Developer Navigation]](#navigation)
+
+## Required Features
+
+##### [[back to Developer Navigation]](#navigation)
+
+## Packages
+
+### Default
+
+| Package | Version | Purpose |
+| --- | --- | --- | 
+| [`@craco/craco`](https://www.npmjs.com/package/@craco/craco) | ^4.0.1 | Overrides CRA /  `react-scripts`'s configuration file to allow custom Webpack and ESLint configurations |
+| [`@material-ui/core`](https://www.npmjs.com/package/@material-ui/core) | ^3.9.3 | Most used staple components for React UI development |
+| [`@material-ui/icons`](https://www.npmjs.com/package/@material-ui/icons) | ^3.0.2 | Large package containing Material Design Icons |
+| [`@material-ui/styles`](https://www.npmjs.com/package/@material-ui/styles) | ^3.0.0-alpha.10 | Material-UI's custom implementation of JSS among other feature support such as `styled-components` |
+| [`@material-ui/system`](https://www.npmjs.com/package/@material-ui/system) | ^3.0.0-alpha.2 | Experimental but extremely useful component composition helper library. |
+| [`localforage`](https://www.npmjs.com/package/localforage) | ^1.7.3 | IndexdedDB storage simplified, with fallback for other persistant browser storage types |
+| [`mobx`](https://www.npmjs.com/package/mobx) | ^5.9.0 | Property access management library for implementing reactive components & observable states |
+| [`mobx-react`](https://www.npmjs.com/package/`mobx-react) | ^5.4.3 | React style bindings for MobX, such as `@inject` and `@observer` |
+| [`react`](https://www.npmjs.com/package/react) | ^16.8.6 | Efficient Virtual DOM managmeent library for class based UI components |
+| [`react-dom`](https://www.npmjs.com/package/react-dom) | ^16.8.6 | Render compoents manually to browser DOM without exisiting React DOM |
+| [`react-router-dom`](https://www.npmjs.com/package/react-router-dom) | ^5.0.0 | Simplified bindings for react-router, such as `BrowserRouter` |
+| [`react-scripts`](https://www.npmjs.com/package/react-scripts) | 2.1.8 | Create React App's bundled collection of scripts for development and production |
+| [`styled-components`](https://www.npmjs.com/package/styled-components) | ^4.2.0 | JSS to CSS mapper to convert JS code into CSS classes dynamically |
+<!-- 
+| [``]() |  |  | -->
+
+### Dev Dependencies
+
+| Package | Version | Purpose |
+| --- | --- | --- |
+| [`@babel/plugin-proposal-decorators`](https://www.npmjs.com/package/@babel/plugin-proposal-decorators) | ^7.4.0 | Webpack plugin that adds support for decorators in Typescript and MobX |
+| [`@storybook/addon-actions`](https://www.npmjs.com/package/@storybook/addon-actions) | ^5.0.5 | Adds a panel to call synthetic actions within your stories |
+| [`@storybook/addon-console`](https://www.npmjs.com/package/@storybook/addon-console) | ^1.1.0 | Enables `console.log()` output in storybook drawer |
+| [`@storybook/addon-knobs`](https://www.npmjs.com/package/@storybook/addon-knobs) | ^5.0.5 | Enables UI to control story props passed to React components |
+| [`@storybook/addon-viewport`](https://www.npmjs.com/package/@storybook/addon-viewport) | ^5.0.5 | Simulate different device resolutions inside storybook |
+| [`@storybook/addons`](https://www.npmjs.com/package/@storybook/addons) | ^5.0.5 | Enable addon support for storybook |
+| [`@storybook/react`](https://www.npmjs.com/package/@storybook/react) | ^5.0.5 | Support for React components inside storybook |
+| [`craco-workbox`](https://www.npmjs.com/package/craco-workbox) | ^0.1.0 | Craco plugin for overriding the [GenerateSW](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generatesw_plugin_1) configuration for CRA's `webpack-workbox-plugin` |
+| [`storybook-addon-material-ui`](https://www.npmjs.com/package/storybook-addon-material-ui) |  | <div>Adjust MUI color palettes with detailed UI on the fly and wrap stories in &lt;Provider /&gt;<blockquote>Note: This cannot be implemented until it supports storybook 5.0 :(</blockquote><div> |
+| [`workbox-cli`](https://www.npmjs.com/package/workbox-cli) | ^4.2.0 | Create a custom service worker & implement default strategies for offline support |
+<!-- 
+| [``]() |  |  | -->
+
+##### [[back to Developer Navigation]](#navigation)
+
+<!-- - [__Required Features__](#development)
+- [__Package Purposes__](#development) -->
