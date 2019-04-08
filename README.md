@@ -93,6 +93,7 @@ __This is the [developer]() section and is NOT for the faint of heart or for our
 - [__Quick Start__](#quick-start)
 - [__Required Features__](#required-features)
 - [__Package Purposes__](#packages)
+- [__Application Lifecycle__](#application-lifecycle)
 
 ---
 
@@ -184,9 +185,28 @@ Less used but still important to development are the following:
 
 ##### [[back to Developer Navigation]](#navigation)
 
+---
+
 ## Required Features
 
+The following features are required to create the minimum viable product as requested by the Harvest Haven owners:
+
+- [x] The app needs to be installable on Desktop and have the ability to be ran as an executable. The operating system will be either Windows or OSX. The app should be able to run on startup and at certain times via a scheduler.
+- [ ] The app should be simple enough that one of the Harvest Haven kids are able to relaunch it if they are passing by and have noticed it isn't working properly.
+- [ ] The app needs to be have an active service worker for offline / online support, or it should be completely offline with only local storage.
+- [ ] The app will need to store video content locally to be retrieved as instantaneously as possible. There should be minimimal load time for each resource.
+- [x] This will require the use of either local storage (Electron) or persistant browser storage (LocalForage)
+- [ ] Harvest Haven will have access to some features that others may not through authentication in [Firebase](), such as:
+  - [ ] Editing the manifest to update gallery contents, playlists, & video descriptions. This may be accomplished in a separate tool via [Toolbox]()
+  - [ ] Adjusting store-only preferences, such as color theme, font-size, display mode, and kiosk-only UI features.
+  - [ ] Administrative tools for downloading the entire video library for offline use.
+- The app should first and foremost be **made to serve the owners of Harvest Haven**. Every priority will be given to them first and their request of necessary features overrides the desires of the customer to ensure that Harvest Haven has the most stable and robust version of the app.
+
+###
+
 ##### [[back to Developer Navigation]](#navigation)
+
+---
 
 ## Packages
 
@@ -231,3 +251,7 @@ Less used but still important to development are the following:
 
 <!-- - [__Required Features__](#development)
 - [__Package Purposes__](#development) -->
+
+## Application Lifecycle
+
+##### [[back to Developer Navigation]](#navigation)
