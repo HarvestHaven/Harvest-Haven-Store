@@ -5,34 +5,45 @@ if ('function' === typeof importScripts) {
         'https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js'
     );
 
+    // : Create an instance if it doesn't already exist.
     self.videos = localforage.createInstance({
         name: 'hh-video', storeName: 'data',
         description: 'this is a store'
     });
 
-    console.log('LocalForage:', self.videos)
-
     if (workbox) {
 
         console.log(`Yay! Workbox is loaded 🎉`);
 
-        // console.log('Instantly Loading New Service Worker if Available')
+        // : Quicky aquire updated service workers and dangerously destroy existing ones.
         // workbox.core.skipWaiting();
         // workbox.core.clientsClaim();
 
-        console.log('Registered Routes for Video Subscription')
         workbox.routing.registerRoute(
-            '/test',
+            new RegExp('https://www.youtube.com'),
             async ({ url, event }) => {
-                return new Response(`Hello from SW!`);
+                const videoID = url.search.match(/\?v=[A-z\d]{11}/g)[0].slice(3)
+                console.log(`Video ID: ${videoID}`)
+                self.videos.setItem(`${videoID}}`, videoID)
+                    .then((value) => {
+                        console.log(`Downloading ${videoID} from YouTube...`)
+                        console.log(`Set [${videoID}] as '${value}'`)
+                    })
+                    .catch(function (err) {
+                        console.error(`Video ${videoID} Failed to Download`, err)
+                    });
+                return new Response(`Return Cache or Stream`);
             }
         )
 
-        console.log('Precache and Route')
+        // : Loads route, vender, and extension based bundles
         workbox.precaching.precacheAndRoute([]);
 
     } else {
+
+        // : TODO - Does this even need a fallback, or not worth the effort?
         console.log(`Boo! Workbox didn't load 😬`);
+        
     }
 
 }
