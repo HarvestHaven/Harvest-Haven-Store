@@ -23,38 +23,18 @@ export default class VideoForage {
     }
 
     get = async () => {
-        // let request1 = new Request('/db/videos/fLjslMtjkhs', { mode: 'no-cors' });
-        // let request2 = new Request('/db/videos/J57KCTvZ7Lc', { mode: 'no-cors' });
-        // let request3 = new Request('/db/videos/tINcLrUEFV0', { mode: 'no-cors' });
-        // let request4 = new Request('/db/videos/fLjslMtjkhs', { mode: 'no-cors' });
-        // await fetch(request1)
-        // await fetch(request2)
-        // await fetch(request3)
-        // await fetch(request4)
-        await fetch('https://www.youtube.com/watch?v=tINcLrUEFV0&t=66')
-        await fetch('https://www.youtube.com/watch?v=tINcLrUEFV0')
-        await fetch('https://www.youtube.com/watch?v=J57KCTvZ7Lc')
-        await fetch('https://www.youtube.com/watch?v=fLjslMtjkhs')
-        await fetch('https://www.youtube.com/watch?v=Bgu7f5cq6cQ')
-        await fetch('https://www.youtube.com/watch?v=fLjslMtjkhs&feature=youtu.be&t=43')
-
-        // .then((response) => { console.log(`Fetch --> Response: ${response.body}`) })
-
-        // fetch('https://www.youtube.com/watch?v=tINcLrUEFV0').then((response) => {
-        //     // console.log(response)
-        //     // console.log(response.body)
-        //     console.log(`Fetch --> Response: ${response.body}`)
-        // })
-        // fetch('https://www.youtube.com/watch?v=fLjslMtjkhs').then((response) => {
-        //     // console.log(response)
-        //     // console.log(response.body)
-        //     console.log(`Fetch --> Response: ${response.body}`)
-        // })
-        // fetch('https://www.youtube.com/watch?v=fLjslMtjkhs').then((response) => {
-        //     // console.log(response)
-        //     // console.log(response.body)
-        //     console.log(`Fetch --> Response: ${response.body}`)
-        // })
+        const fetchURLS = [
+            'https://www.youtube.com/watch?v=tINcLrUEFV0&t=66',
+            'https://www.youtube.com/watch?v=tINcLrUEFV0',
+            'https://www.youtube.com/watch?v=J57KCTvZ7Lc',
+            'https://www.youtube.com/watch?v=fLjslMtjkhs',
+            'https://www.youtube.com/watch?v=Bgu7f5cq6cQ',
+            'https://www.youtube.com/watch?v=fLjslMtjkhs&feature=youtu.be&t=43'
+        ]
+        await fetchURLS.map(
+            async (url) =>
+                await fetch(url)
+        )
     }
 
     clear = async () => {
