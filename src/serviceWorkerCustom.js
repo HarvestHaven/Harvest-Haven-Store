@@ -2,7 +2,8 @@ if ('function' === typeof importScripts) {
 
     importScripts(
         'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js',
+        'https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'
     );
 
     // : Create an instance if it doesn't already exist.
@@ -10,6 +11,8 @@ if ('function' === typeof importScripts) {
         name: 'hh-video', storeName: 'data',
         description: 'this is a store'
     });
+
+    // console.log('aXios', axios)
 
     if (workbox) {
 
@@ -20,20 +23,23 @@ if ('function' === typeof importScripts) {
         // workbox.core.clientsClaim();
 
         workbox.routing.registerRoute(
-            new RegExp('https://www.youtube.com'),
+            new RegExp('/videos/'),
+            // new RegExp('https://www.youtube.com'),
             async ({ url, event }) => {
-                const videoURL = url.href.match(/https:\/\/www\.youtube\.com\/watch\?v=[A-z\d]{11}/g)[0]
-                const videoID = url.search.match(/\?v=[A-z\d]{11}/g)[0].slice(3)
-                console.log(`Video URL: ${videoURL}`)
-                console.log(`Video ID: ${videoID}`)
+                // const videoURL = url.href.match(/https:\/\/www\.youtube\.com\/watch\?v=[A-z\d]{11}/g)[0]
+                // const videoID = url.search.match(/\?v=[A-z\d]{11}/g)[0].slice(3)
+                // console.log(`Video URL: ${videoURL}`)
+                // console.log(`Video ID: ${videoID}`)
+                const videoID = url.href
                 self.videos.setItem(`${videoID}}`, videoID)
                     .then((value) => {
-                        console.log(`Downloading ${videoID} from YouTube...`)
+                        console.log(`Downloading ${videoID} from Youtube...`)
                         console.log(`Set [${videoID}] as '${value}'`)
                     })
                     .catch(function (err) {
                         console.error(`Video ${videoID} Failed to Download`, err)
                     });
+
                 return new Response({ text: `Returned [${videoID}]` });
             }
         )

@@ -1,3 +1,5 @@
+import axios from 'axios';
+
 export default class VideoForage {
 
     constructor(localForage) {
@@ -24,17 +26,29 @@ export default class VideoForage {
 
     get = async () => {
         const fetchURLS = [
-            'https://www.youtube.com/watch?v=tINcLrUEFV0&t=66',
-            'https://www.youtube.com/watch?v=tINcLrUEFV0',
-            'https://www.youtube.com/watch?v=J57KCTvZ7Lc',
-            'https://www.youtube.com/watch?v=fLjslMtjkhs',
-            'https://www.youtube.com/watch?v=Bgu7f5cq6cQ',
-            'https://www.youtube.com/watch?v=fLjslMtjkhs&feature=youtu.be&t=43'
+            '/videos/tINcLrUEFV0',
+            '/videos/J57KCTvZ7Lc',
+            '/videos/fLjslMtjkhs',
+            '/videos/Bgu7f5cq6cQ',
+            '/videos/fLjslMtjkhs',
+            // 'https://www.youtube.com/watch?v=tINcLrUEFV0&t=66',
+            // 'https://www.youtube.com/watch?v=tINcLrUEFV0',
+            // 'https://www.youtube.com/watch?v=J57KCTvZ7Lc',
+            // 'https://www.youtube.com/watch?v=fLjslMtjkhs',
+            // 'https://www.youtube.com/watch?v=Bgu7f5cq6cQ',
+            // 'https://www.youtube.com/watch?v=fLjslMtjkhs&feature=youtu.be&t=43'
         ]
         await fetchURLS.map(
             async (url) =>
-                await fetch(url)
+                await axios.get(url, {
+                    // mode: 'no-cors' 
+                }).then(response => {
+                    console.log(response)
+                })
         )
+        // axios.get('https://www.youtube.com/watch?v=tINcLrUEFV0').then(response => {
+        //     console.log(response)
+        // })
     }
 
     clear = async () => {
