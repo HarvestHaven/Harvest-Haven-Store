@@ -34,7 +34,7 @@ Hello there valued customer! If you are not very tech savy or you have never use
 
 ## What is this App?
 
-The Harvest Haven App is a special website that can anyone can take with them whether you are on your computer, your tablet or phone. We chose not to go through the hurtles of mobile app development through Google and Apple and have put together something called a 'PWA', that allows us to share the same Harvest Haven experience with both desktop and mobile device users. It also makes it easier for us to keep the app updated and distributed for all. We hope you like it!
+The Harvest Haven App is a special website that can anyone can take with them whether you are on your computer, your tablet or phone. We chose not to go through the hurtles of mobile app development through Google and Apple and have put together something called a 'PWA', that allows us to share the same Harvest Haven experience with both desktop and mobile device users. It also makes it easier for us to keep the app updated and distributed for all. We hope you like it! 
 
 
 
@@ -53,7 +53,7 @@ The Harvest Haven App is a special website that can anyone can take with them wh
     - [__Visiting the Website__](#how-to-install)
     - [__Device Helper__](#how-to-install)
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper erat non orci cursus, vitae ultricies orci fermentum. Pellentesque aliquam, turpis in dictum auctor, risus ipsum rutrum magna, sit amet hendrerit elit nibh sit amet orci. Praesent aliquam scelerisque quam, vitae mollis nunc. Sed egestas mattis faucibus. Aenean eros arcu, dignissim sit amet dui commodo, sodales luctus dolor. Aenean eget leo neque. Proin pharetra facilisis magna, vitae dapibus arcu euismod a. Cras sem erat, tincidunt a consectetur et, elementum quis nisi. Vivamus vel consectetur dui, a suscipit quam. Suspendisse varius ante consequat neque tempor maximus. 
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper erat non orci cursus, vitae ultricies orci fermentum. Pellentesque aliquam, turpis in dictum auctor, risus ipsum rutrum magna, sit amet hendrerit elit nibh sit amet orci. Praesent aliquam scelerisque quam, vitae mollis nunc. Sed egestas mattis faucibus. Aenean eros arcu, dignissim sit amet dui commodo, sodales luctus dolor. Aenean eget leo neque. Proin pharetra facilisis magna, vitae dapibus arcu euismod a. Cras sem erat, tincidunt a consectetur et, elementum quis nisi. Vivamus vel consectetur dui, a suscipit quam. Suspendisse varius ante consequat neque tempor maximus.
 
 - [__Mobile__](#how-to-install)
 - [__Desktop__](#how-to-install)
@@ -157,7 +157,7 @@ Runs the application in `production` mode and is optimized for performance, as i
 
 > View app in browser at [localhost:5000](http://localhost:5000/)
 
-## 
+##
 
 ## Deploy
 
@@ -175,10 +175,10 @@ Runs the application in `test` mode. CRA by default uses [jest]() at its test ru
 
 ## Other Commands
 
-Less used but still important to development are the following: 
+Less used but still important to development are the following:
 
 | Command | Purpose |
-| --- | --- | 
+| --- | --- |
 | `serve` | Quickly host the contents of the `build` director at [localhost:5000](http://localhost:5000/)|
 | `build-storybook` | Takes your storybook and builds a static site that can be served|
 | `eject` | **NEVER** use this! Use at your own [risk!](https://facebook.github.io/create-react-app/docs/alternatives-to-ejecting) |
@@ -213,7 +213,7 @@ The following features are required to create the minimum viable product as requ
 ### Default
 
 | Package | Version | Purpose |
-| --- | --- | --- | 
+| --- | --- | --- |
 | [`@craco/craco`](https://www.npmjs.com/package/@craco/craco) | ^4.0.1 | Overrides CRA /  `react-scripts`'s configuration file to allow custom Webpack and ESLint configurations |
 | [`@material-ui/core`](https://www.npmjs.com/package/@material-ui/core) | ^3.9.3 | Most used staple components for React UI development |
 | [`@material-ui/icons`](https://www.npmjs.com/package/@material-ui/icons) | ^3.0.2 | Large package containing Material Design Icons |
@@ -227,7 +227,7 @@ The following features are required to create the minimum viable product as requ
 | [`react-router-dom`](https://www.npmjs.com/package/react-router-dom) | ^5.0.0 | Simplified bindings for react-router, such as `BrowserRouter` |
 | [`react-scripts`](https://www.npmjs.com/package/react-scripts) | 2.1.8 | Create React App's bundled collection of scripts for development and production |
 | [`styled-components`](https://www.npmjs.com/package/styled-components) | ^4.2.0 | JSS to CSS mapper to convert JS code into CSS classes dynamically |
-<!-- 
+<!--
 | [``]() |  |  | -->
 
 ### Dev Dependencies
@@ -244,7 +244,7 @@ The following features are required to create the minimum viable product as requ
 | [`craco-workbox`](https://www.npmjs.com/package/craco-workbox) | ^0.1.0 | Craco plugin for overriding the [GenerateSW](https://developers.google.com/web/tools/workbox/modules/workbox-webpack-plugin#generatesw_plugin_1) configuration for CRA's `webpack-workbox-plugin` |
 | [`storybook-addon-material-ui`](https://www.npmjs.com/package/storybook-addon-material-ui) |  | <div>Adjust MUI color palettes with detailed UI on the fly and wrap stories in &lt;Provider /&gt;<blockquote>Note: This cannot be implemented until it supports storybook 5.0 :(</blockquote><div> |
 | [`workbox-cli`](https://www.npmjs.com/package/workbox-cli) | ^4.2.0 | Create a custom service worker & implement default strategies for offline support |
-<!-- 
+<!--
 | [``]() |  |  | -->
 
 ##### [[back to Developer Navigation]](#navigation)
