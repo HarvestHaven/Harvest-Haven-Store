@@ -106,10 +106,11 @@ Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend ri
 # Developer
 
 <div align="center">
-  <img height="100" src="https://cdn.pixabay.com/photo/2016/07/01/22/33/industrial-safety-1492046_960_720.png" alt="Extension Boilerplate">
-</div>
 
 __This is the ___[`developer`]()___ section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
+
+  <img height="100" src="https://cdn.pixabay.com/photo/2016/07/01/22/33/industrial-safety-1492046_960_720.png" alt="Extension Boilerplate">
+</div>
 
 ---
 
