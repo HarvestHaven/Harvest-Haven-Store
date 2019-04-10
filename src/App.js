@@ -22,6 +22,9 @@ class App extends Component {
           <button onClick={videos.get}>Fetch</button>
           <button onClick={videos.clear}>Clear</button>
           <button onClick={videos.drop}>Drop</button>
+          {/* <button onClick={videos.downloadYTVideo}>Download</button> */}
+          <button onClick={videos.expressDownloadYTVideo}>Download!</button>
+          {/* <button onClick={videos.ytdlVideo}>Download</button> */}
           <a
             className="App-link"
             href="https://reactjs.org"

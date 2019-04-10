@@ -1,10 +1,15 @@
 import axios from 'axios';
+import ytdl from 'ytdl-core';
 
 export default class VideoForage {
 
+
+    testUrl = 'https://www.youtube.com/watch?v=i6USBe9Gr3U';
+
     constructor(localForage) {
         this.$ = localForage.createInstance({
-            name: 'hh-video', storeName: 'data',
+            name: 'hh-video',
+            storeName: 'data',
             description: 'this is a store'
         });
     }
@@ -41,7 +46,7 @@ export default class VideoForage {
         await fetchURLS.map(
             async (url) =>
                 await axios.get(url, {
-                    // mode: 'no-cors' 
+                    // mode: 'no-cors'
                 }).then(response => {
                     console.log(response)
                 })
@@ -65,6 +70,46 @@ export default class VideoForage {
         this.$.dropInstance().then(function () {
             console.log('Dropped the store of the current instance');
         });
+    }
+
+    /**
+     *
+     * *** MP ***
+     *
+     */
+
+    // Download via express (pipes to browser or callee I think)
+    // FIXME: Would require we use the Express Server's PORT, 4000.
+    expressDownloadYTVideo = async () => {
+        console.log('attempting download via express server...');
+
+        return axios.get('/download?URL=' + this.testUrl);
+    }
+
+    // FIXME: CORS error when I try this...
+    ytdlVideo = async () => {
+        console.log('attempting download via ytdl...');
+        const stream = ytdl(this.testUrl, {
+            format: 'mp4'
+        })
+        // Can pipe to either a Response or a Node ReadableStream in ytdl.
+        // .pipe(this.$.setItem('video', ));
+        stream.on('end', ()=>{
+            console.log('Finished!')
+        })
+
+    }
+
+    // FIXME: CORS error when I try this...
+    downloadYTVideo = async () => {
+        fetch(this.testUrl)
+            .then(function (response) {
+                return response.blob; //Psst! ReadableStream is an option via 'response.body'
+            })
+            .then(function (blob) {
+                console.log('yay I have a blob', blob);
+            })
+            .catch(console.log);
     }
 
 }
