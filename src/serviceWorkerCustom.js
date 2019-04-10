@@ -19,8 +19,6 @@ if ('function' === typeof importScripts) {
         console.log(`Yay! Workbox is loaded 🎉`);
 
         // : Quicky aquire updated service workers and dangerously destroy existing ones.
-        // workbox.core.skipWaiting();
-        // workbox.core.clientsClaim();
 
         workbox.routing.registerRoute(
             new RegExp('/videos/'),
