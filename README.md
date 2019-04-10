@@ -45,7 +45,7 @@ The Harvest Haven App is a special website that can anyone can take with them wh
 - Save and download your favorite videos for when you don't have access to the internet.
 - Have the ability to share what you have learned with your friends and neighbors in person.
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
@@ -66,7 +66,7 @@ The Harvest Haven App is a special website that can anyone can take with them wh
         Chrome 73+
         Firefox 66+
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
@@ -85,7 +85,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper erat 
 
 Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend risus sed diam imperdiet rhoncus. Praesent pulvinar, dolor a ultrices venenatis, augue diam ornare mi, vitae laoreet elit nisi eu dui. Morbi ut nisi tristique, rhoncus est ut, hendrerit massa. Sed quis purus vestibulum, interdum enim quis, facilisis diam. Sed consequat, ex vel tempor sagittis, turpis eros consectetur justo, et rutrum nunc augue eu massa.
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ## Device Install Guides
 
@@ -98,18 +98,20 @@ Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend ri
       - [__Chrome__](#how-to-install)
       - [__Firefox__](#how-to-install)
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
 
 # Developer
 
-__This is the [developer]() section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
+<div align="center">
+  <img height="100" src="https://cdn.pixabay.com/photo/2016/07/01/22/33/industrial-safety-1492046_960_720.png" alt="Extension Boilerplate">
+</div>
+
+__This is the ___[`developer`]()___ section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
 
 ---
-
-> __Note for all developers:__ If you are having trouble of any kind, tag [Braden](https://github.com/Braden-Preston) or [Michael](https://github.com/MikePreston17) or submit an issue to the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues).
 
 ### Navigation
 
@@ -118,11 +120,15 @@ __This is the [developer]() section and is NOT for the faint of heart or for our
 - [__Quick Start__](#quick-start)
 - [__Required Features__](#required-features)
 - [__Package Purposes__](#packages)
-- [__Application Lifecycle__](#application-lifecycle)
+  - [__Client__](#bundle)
+  - [__Development__](#bundle)
+- [__Application Lifecycles__](#application-lifecycles)
 
 ---
 
 ## Basic Information
+
+> __Note for all developers:__ If you are having trouble of any kind, tag [Braden](https://github.com/Braden-Preston) or [Michael](https://github.com/MikePreston17) or submit an issue to the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues).
 
 This application is a PWA (Progressive Website Application) that is developed in JavaScript using the Node Framework. It employs a serverless stack that is most closely aligned with the MERN stack.
 
@@ -279,13 +285,102 @@ The following features are required to create the minimum viable product as requ
 
 ---
 
-## Application Lifecycle
+## Application Lifecycles
+
+  - [__General__](#general)
+  - [__Service Worker__](#service-worker)
+  - [__App Shell__](#app-shell)
+  - [__Video Player__](#video-player)
+  - [__MobX State__](#mobx-store)
+  - [__User Data__](#user-data)
+
+---
+
+## Service Worker
+
+> A Service worker is a persistant task runner that always runs in the background of your browser. It is able to precache assets to improve performance on page reloads. It is primarily responsible for allowing the application to run offline when there is no internet connection available.
+
+### Responsibilities
+
+ - Initialize with page and begin caching all necessary resources needed for the [app shell]() to run offline.
+ - Iteratvely cache less important resources (images, fonts, etc) as they are needed to allow rapid reloads of site content.
+ - Register routes for future nagivation as smaller bundles that don't impede the main shell's [First Paint]() & [Time to Interactive]()
+
+
+
+
+##### [[back to Developer Application Lifecycles]](#application-lifecycles)
+
+---
+
+### Example Implementation
+
+```javascript
+class VideoPlayer extends Component {
+
+  @observable data = null
+  @observable source = null
+  @observable variant = null
+
+  componentDidMount() {
+    const { videoID } = this.props.match.params
+
+    // : Ideal: Get data from Cache/IndexedDB 
+    fetch(`/videos/${videoID}`)
+      .then( file => {
+        this.data = file
+        this.source = 'cache'
+      })
+      .catch( err => {
+        // : REASONS FOR FAILURE:
+        // : Video is not cached
+        // : Service worker (SW) is not registered
+        // : Workbox (SW's) is/are not supported
+        // : App is 'development' not 'production'
+
+        // : Fallback: Try to obtain normally from Network
+        fetch(`https://www.youtube.com/watch?v=${videoID}`)
+          .then( stream => {
+            this.data = stream
+            this.source = 'youtube'
+          })
+          .catch( err => {
+            // : REASONS FOR FAILURE:
+            // : Network is offline
+            // : App is in 'development'
+            // : Local CORS violation
+
+            // : Fallback: User will have to reconnect to the network at a minimum
+            this.data = null
+            this.source = null
+          })
+      })
+  }
+
+  render() {
+    if (this.source === ('cache' || null )) {
+      return (
+        // Display our Custom React Video Player
+        <VideoPlayer variant={this.variant} src={this.data} />
+      )
+    } else {
+        // Display Default React Youtube Player
+        <YoutubePlayer variant={this.variant} src={this.data} />
+    }
+  }
+}
+```
+##### [[back to Developer Application Lifecycles]](#application-lifecycles)
+
+---
 
 **As described when observing the `src` directory, not as a final bundled build.**
 
 *** This chapter is quickly subject to change and modification
 
 ### Initalization
+
+[***This Section is OUT OF DATE and will be refactored and primarily moved to Application Lifecycles --> `General`***](#application-lifecycle)
 
 >  Occurs when the app is online and not installed or it is installed, but is updating with the latest version of the web app.
 
