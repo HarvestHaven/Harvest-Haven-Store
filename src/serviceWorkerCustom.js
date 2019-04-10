@@ -22,6 +22,18 @@ if ('function' === typeof importScripts) {
         // workbox.core.skipWaiting();
         // workbox.core.clientsClaim();
 
+        // Sample Route:
+        workbox.routing.registerRoute(
+            new RegExp('https://jsonplaceholder.typicode.com/users'),
+            workbox.strategies.cacheFirst()
+        );
+
+
+        workbox.routing.registerRoute(
+            new RegExp('localhost:4000'),
+            workbox.strategies.cacheFirst()
+        )
+
         workbox.routing.registerRoute(
             new RegExp('/videos/'),
             // new RegExp('https://www.youtube.com'),
