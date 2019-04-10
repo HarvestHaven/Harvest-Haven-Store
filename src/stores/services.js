@@ -21,11 +21,12 @@ export default class ServicesStore {
         if ('serviceWorker' in navigator) {
             const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
 
-            console.log('hello there good mappingssss and upssdates')
+            console.log('hello there good d upssd testingates cats more carrots tests')
 
             wb.addEventListener('installed', (event) => {
                 if (!event.isUpdate) {
                     this.notify('App can now be used offline!', { variant: 'success' });
+                    // window.location.reload()
                 } else if (event.isUpdate) {
                     this.notify('A new service worker has installed (updating a previous one)');
                 } else { }
@@ -33,7 +34,7 @@ export default class ServicesStore {
 
             wb.addEventListener('waiting', (event) => {
                 if (!event.isUpdate) {
-                    // alert('A new service worker has installed (for the first time)');
+                    alert('A waiting new service worker has installed (for the first time)');
                 } else if (event.isUpdate) {
                     // : A service updated worker has installed but it's stuck in the waiting phase
                     this.notify("Harvest Haven is ready to be updated", {
@@ -59,8 +60,8 @@ export default class ServicesStore {
 
             wb.addEventListener('activated', (event) => {
                 if (!event.isUpdate) {
-                    this.wb.messageSW({ type: 'CLIENTS_CLAIM' });
                     this.notify('The service worker has finished activating (for the first time) & This app is now available offline');
+                    window.location.reload()
                 } else if (event.isUpdate) {
                     this.notify('The updated service worker has finished activating & This app was updated and is available without internet');
                 } else { }
