@@ -21,7 +21,7 @@ export default class ServicesStore {
         if ('serviceWorker' in navigator) {
             const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
 
-            console.log('hello there good d7 cruiser testingatesrtests cats more carrots tests')
+            console.log('More push tests')
 
             wb.addEventListener('installed', (event) => {
                 if (!event.isUpdate) {
@@ -34,7 +34,7 @@ export default class ServicesStore {
 
             wb.addEventListener('waiting', (event) => {
                 if (!event.isUpdate) {
-                    alert('A waiting new service worker has installed (for the first time)');
+                    this.notify('A waiting new service worker has installed (for the first time)');
                 } else if (event.isUpdate) {
                     // : A service updated worker has installed but it's stuck in the waiting phase
                     this.notify("Harvest Haven is ready to be updated", {
