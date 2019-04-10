@@ -21,7 +21,7 @@ export default class ServicesStore {
         if ('serviceWorker' in navigator) {
             const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
 
-            console.log('hello there good d upssd testingates cats more carrots tests')
+            console.log('hello there good d7 cruiser testingates cats more carrots tests')
 
             wb.addEventListener('installed', (event) => {
                 if (!event.isUpdate) {
