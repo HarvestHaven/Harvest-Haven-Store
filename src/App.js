@@ -13,7 +13,12 @@ import { observable, action } from 'mobx'
 
 const store = new MobxStore()
 const forage = new Forage()
-const theme = createMuiTheme()
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
 
 const snackbarOptions = {
   maxSnack: 3,
@@ -39,10 +44,11 @@ export const App = () =>
     const { enqueueSnackbar, closeSnackbar } = this.props
 
     // : Pass the calling function for notifications to the store
-    services.setNotifyFunctions({enqueueSnackbar, closeSnackbar})
+    services.setNotifyFunctions({ enqueueSnackbar, closeSnackbar })
 
     // : Initialize the localforage session for videos
     this.props.forage.videos.init()
+    console.log('good! stufing stufings and ff')
   }
 
   render() {

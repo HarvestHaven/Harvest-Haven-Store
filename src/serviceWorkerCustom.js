@@ -19,6 +19,17 @@ if ('function' === typeof importScripts) {
         console.log(`Yay! Workbox is loaded 🎉`);
 
         // : Quicky aquire updated service workers and dangerously destroy existing ones.
+        // self.addEventListener('activate', event => {
+        //     event.waitUntil(clients.claim());
+        // });
+        self.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'SKIP_WAITING') {
+                self.skipWaiting();
+            }
+            if (event.data && event.data.type === 'CLIENTS_CLAIM') {
+                event.waitUntil(clients.claim());
+            }
+        });
 
         workbox.routing.registerRoute(
             new RegExp('/videos/'),
