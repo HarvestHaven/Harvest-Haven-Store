@@ -1,7 +1,8 @@
 {
 	"name": "harvest-haven",
 	"version": "0.1.0",
-	"private": true,
+    "private": true,
+    "proxy": "http://localhost:4000/",
 	"dependencies": {
 		"@craco/craco": "^4.1.0",
 		"@material-ui/core": "^3.9.3",
@@ -9,6 +10,7 @@
 		"@material-ui/styles": "^3.0.0-alpha.10",
 		"@material-ui/system": "^3.0.0-alpha.2",
 		"axios": "^0.18.0",
+		"concurrently": "^4.1.0",
 		"cors": "^2.8.5",
 		"express": "^4.16.4",
 		"localforage": "^1.7.3",
@@ -30,7 +32,8 @@
 		"serve": "serve -s build",
 		"ytd": "nodemon",
 		"storybook": "start-storybook -p 9009 -s public",
-		"build-storybook": "build-storybook -s public"
+        "build-storybook": "build-storybook -s public",
+        "serve-proxy": "yarn build && concurrently --kill-others \"nodemon server.js\" \"yarn serve\""
 	},
 	"eslintConfig": {
 		"extends": "react-app"
