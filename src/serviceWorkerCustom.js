@@ -19,8 +19,14 @@ if ('function' === typeof importScripts) {
         console.log(`Yay! Workbox is loaded 🎉`);
 
         // : Quicky aquire updated service workers and dangerously destroy existing ones.
-        // workbox.core.skipWaiting();
-        // workbox.core.clientsClaim();
+        self.addEventListener('activate', event => {
+            event.waitUntil(clients.claim());
+        });
+        self.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'SKIP_WAITING') {
+                self.skipWaiting();
+            }
+        });
 
         // Sample Route:
         workbox.routing.registerRoute(
