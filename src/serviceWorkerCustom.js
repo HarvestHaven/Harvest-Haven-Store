@@ -3,7 +3,9 @@ if ('function' === typeof importScripts) {
     importScripts(
         'https://storage.googleapis.com/workbox-cdn/releases/3.5.0/workbox-sw.js',
         'https://cdnjs.cloudflare.com/ajax/libs/localforage/1.7.3/localforage.min.js',
-        'https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js'
+        'https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js',
+        'https://cdn.jsdelivr.net/npm/ytdl-core@0.29.1/lib/index.min.js',
+        'testscript.js'
     );
 
     // : Create an instance if it doesn't already exist.
@@ -34,11 +36,15 @@ if ('function' === typeof importScripts) {
             workbox.strategies.cacheFirst()
         );
 
+        // // Trying out Express as a route:
+        // workbox.routing.registerRoute(
+        //     new RegExp('localhost:4000/download'),
+        //     workbox.strategies.cacheFirst()
+        // )
 
-        workbox.routing.registerRoute(
-            new RegExp('localhost:4000'),
-            workbox.strategies.cacheFirst()
-        )
+        // workbox.routing.registerRoute(
+
+        // )
 
         workbox.routing.registerRoute(
             new RegExp('/videos/'),
@@ -48,17 +54,26 @@ if ('function' === typeof importScripts) {
                 // const videoID = url.search.match(/\?v=[A-z\d]{11}/g)[0].slice(3)
                 // console.log(`Video URL: ${videoURL}`)
                 // console.log(`Video ID: ${videoID}`)
-                const videoID = url.href
-                self.videos.setItem(`${videoID}}`, videoID)
+                const videoUrl = url.href
+                self.videos.setItem(`${videoUrl}}`, videoUrl)
                     .then((value) => {
-                        console.log(`Downloading ${videoID} from Youtube...`)
-                        console.log(`Set [${videoID}] as '${value}'`)
+                        console.log(`Downloading ${videoUrl} from Youtube...`)
+                        console.log('<3')
+                        hello();
+                        testscript.hello();
+
+                        let stream = ytdl(videoUrl, {
+                            format: 'mp4'
+                        });
+                        console.log('stream: ', stream);
+
+                        // console.log(`Set [${videoUrl}] as '${value}'`)
                     })
                     .catch(function (err) {
-                        console.error(`Video ${videoID} Failed to Download`, err)
+                        console.error(`Video ${videoUrl} Failed to Download`, err)
                     });
 
-                return new Response({ text: `Returned [${videoID}]` });
+                return new Response({ text: `Returned [${videoUrl}]` });
             }
         )
 
