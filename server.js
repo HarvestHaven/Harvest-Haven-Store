@@ -35,3 +35,30 @@ app.get('/download', (req, res) => {
     res.send(stream);
     return stream;
 });
+
+    ytdl(URL, {
+        format: 'mp4'
+    }).pipe(res);
+});
+
+// Src: https://github.com/jkvora/Youtube-downloder/blob/master/server.ts
+app.get('/video', function (req, res) {
+    console.log("In youtube Routes:GET");
+
+    var strUrl = req.query.url;
+
+    var ytstream = ytdl(strUrl);
+    //var tempFile = fs.createWriteStream('/video');
+
+    res.setHeader("Content-Type", "application/octet-stream");
+    res.writeHead(200);
+
+    ytstream.on('data', function (data) {
+      res.write(data);
+    })
+
+    ytstream.on('end', function (data) {
+      res.send();
+    })
+  })
+
