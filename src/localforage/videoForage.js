@@ -83,7 +83,7 @@ export default class VideoForage {
     expressDownloadYTVideo = async () => {
         console.log('attempting download via express server...');
 
-        return axios.get('/download?URL=' + this.testUrl);
+        return axios.get('localhost:4000/download?URL=' + this.testUrl);
     }
 
     // FIXME: CORS error when I try this...
