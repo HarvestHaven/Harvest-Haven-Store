@@ -7,6 +7,8 @@ import { Provider } from 'mobx-react';
 import MobxStore from './stores'
 import Forage from './localforage'
 
+import { hot } from 'react-hot-loader'
+
 const store = new MobxStore()
 const forage = new Forage()
 
@@ -29,14 +31,17 @@ const snackbarOptions = {
   },
 }
 
-export const App = () =>
-  <Provider forage={forage} store={store}>
+const App = () =>
+  <Provider
+    forage={forage}
+    store={store}
+  >
     <MuiThemeProvider theme={theme}>
       <SnackbarProvider {...snackbarOptions}>
         <RoutedApp />
       </SnackbarProvider>
     </MuiThemeProvider>
-  </Provider>
+  </Provider >
 
 @withSnackbar @inject('forage', 'store') @observer class RoutedApp extends Component {
 
@@ -60,7 +65,8 @@ export const App = () =>
     return (
       <div className="App">
         <header className="App-header">
-          <LoadingScreen visible={loader} />
+          <h1>React App</h1>
+          {/* <LoadingScreen visible={loader} /> */}
           <p>
             Edit <code>src/App.jsx</code> and save to reload.
           </p>
@@ -94,3 +100,6 @@ const LoadingScreen = observer(({ visible }) => (
     }
   </>
 ))
+
+export default hot(module)(App)
+// export default App

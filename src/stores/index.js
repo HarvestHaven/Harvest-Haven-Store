@@ -2,7 +2,7 @@ import { configure } from 'mobx'
 
 import ServicesStore from './services';
 
-configure({ enforceActions: "observed" })
+// configure({ enforceActions: "observed" })
 
 class MobxStore {
     constructor() {
