@@ -1,24 +1,70 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { inject } from 'mobx-react';
+import React, { Component } from 'react';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider, withSnackbar } from 'notistack';
+import { inject, observer } from 'mobx-react'
+import { Provider } from 'mobx-react';
+import MobxStore from './stores'
+import Forage from './localforage'
 
-class App extends Component {
+const store = new MobxStore()
+const forage = new Forage()
+
+const rest = (ms) => {
+  return new Promise(r => setTimeout(r, ms));
+}
+
+const theme = createMuiTheme({
+  typography: {
+    useNextVariants: true,
+  },
+});
+
+const snackbarOptions = {
+  maxSnack: 3,
+  disableWindowBlurListener: true,
+  anchorOrigin: {
+    vertical: 'bottom',
+    horizontal: 'center',
+  },
+}
+
+export const App = () =>
+  <Provider forage={forage} store={store}>
+    <MuiThemeProvider theme={theme}>
+      <SnackbarProvider {...snackbarOptions}>
+        <RoutedApp />
+      </SnackbarProvider>
+    </MuiThemeProvider>
+  </Provider>
+
+@withSnackbar @inject('forage', 'store') @observer class RoutedApp extends Component {
 
   componentDidMount() {
+    const { services } = this.props.store
+    const { enqueueSnackbar, closeSnackbar } = this.props
+
+    // : Pass the calling function for notifications to the store
+    services.setNotifyFunctions({ enqueueSnackbar, closeSnackbar })
+
+    // : Initialize the localforage session for videos
     this.props.forage.videos.init()
   }
 
   render() {
+    const { services } = this.props.store
     const { forage } = this.props
     const { videos } = forage
+    const { loader } = services
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <LoadingScreen visible={loader} />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit <code>src/App.jsx</code> and save to reload.
           </p>
+          <button onClick={this.toggle}>Toggle</button>
           <button onClick={videos.get}>Fetch</button>
           <button onClick={videos.clear}>Clear</button>
           <button onClick={videos.drop}>Drop</button>
@@ -28,7 +74,7 @@ class App extends Component {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            Learn React Stuff
           </a>
         </header>
       </div>
@@ -36,4 +82,15 @@ class App extends Component {
   }
 }
 
-export default inject('forage')(App);
+const LoadingScreen = observer(({ visible }) => (
+  <>
+    {visible &&
+      <div style={{
+        height: '100vh', width: '100vw', background: '#eae1c5', position: 'absolute',
+        display: 'flex', flexFlow: 'row no-wrap', justifyContent: 'center', alignItems: 'center'
+      }}>
+        <h1 style={{ color: '#ec5c5c' }}>...</h1>
+      </div>
+    }
+  </>
+))

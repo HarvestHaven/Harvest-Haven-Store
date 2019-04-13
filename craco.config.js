@@ -1,7 +1,9 @@
 const CracoWorkboxPlugin = require('craco-workbox');
 
 module.exports = {
-    // plugins: [{
-    //     plugin: CracoWorkboxPlugin
-    // }]
-}
+    babel: {
+        plugins: [
+            ["@babel/plugin-proposal-decorators", { legacy: true }]
+        ]
+    }
+};

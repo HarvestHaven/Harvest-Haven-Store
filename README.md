@@ -45,7 +45,7 @@ The Harvest Haven App is a special website that can anyone can take with them wh
 - Save and download your favorite videos for when you don't have access to the internet.
 - Have the ability to share what you have learned with your friends and neighbors in person.
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
@@ -66,7 +66,7 @@ The Harvest Haven App is a special website that can anyone can take with them wh
         Chrome 73+
         Firefox 66+
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
@@ -85,7 +85,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ullamcorper erat 
 
 Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend risus sed diam imperdiet rhoncus. Praesent pulvinar, dolor a ultrices venenatis, augue diam ornare mi, vitae laoreet elit nisi eu dui. Morbi ut nisi tristique, rhoncus est ut, hendrerit massa. Sed quis purus vestibulum, interdum enim quis, facilisis diam. Sed consequat, ex vel tempor sagittis, turpis eros consectetur justo, et rutrum nunc augue eu massa.
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ## Device Install Guides
 
@@ -98,18 +98,21 @@ Phasellus nec purus porttitor, porttitor nunc non, mollis dui. Donec eleifend ri
       - [__Chrome__](#how-to-install)
       - [__Firefox__](#how-to-install)
 
-##### [[back to Customer]](#New-Customer)
+##### [[back to Customer]](#customer)
 
 ---
 
 
 # Developer
 
-__This is the [developer]() section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
+> __This is the ___[`developer`]()___ section and is NOT for the faint of heart or for our valued customers. If you are one of these, click here to [go back to safety!](#customer)__
+
+<div align="center">
+
+  <img height="100" src="https://cdn.pixabay.com/photo/2016/07/01/22/33/industrial-safety-1492046_960_720.png" alt="Extension Boilerplate">
+</div>
 
 ---
-
-> __Note for all developers:__ If you are having trouble of any kind, tag [Braden](https://github.com/Braden-Preston) or [Michael](https://github.com/MikePreston17) or submit an issue to the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues).
 
 ### Navigation
 
@@ -118,11 +121,13 @@ __This is the [developer]() section and is NOT for the faint of heart or for our
 - [__Quick Start__](#quick-start)
 - [__Required Features__](#required-features)
 - [__Package Purposes__](#packages)
-- [__Application Lifecycle__](#application-lifecycle)
+- [__Application Lifecycles__](#application-lifecycles)
 
 ---
 
 ## Basic Information
+
+> __Note for all developers:__ If you are having trouble of any kind, tag [Braden](https://github.com/Braden-Preston) or [Michael](https://github.com/MikePreston17) or submit an issue to the [repo](https://github.com/HarvestHaven/Harvest-Haven-Store/issues).
 
 This application is a PWA (Progressive Website Application) that is developed in JavaScript using the Node Framework. It employs a serverless stack that is most closely aligned with the MERN stack.
 
@@ -235,7 +240,7 @@ The following features are required to create the minimum viable product as requ
 
 ## Packages
 
-### Default
+### Client Bundle
 
 | Package | Version | Purpose |
 | --- | --- | --- |
@@ -255,7 +260,7 @@ The following features are required to create the minimum viable product as requ
 <!--
 | [``]() |  |  | -->
 
-### Dev Dependencies
+### Development
 
 | Package | Version | Purpose |
 | --- | --- | --- |
@@ -279,11 +284,37 @@ The following features are required to create the minimum viable product as requ
 
 ---
 
-## Application Lifecycle
+## Application Lifecycles
 
-**As described when observing the `src` directory, not as a final bundled build.**
+  - [__General__](#general)
+  - [__Service Worker__](#service-worker) 
+  - __App Shell__
+  - [__Video Player__](#video-player)
+  - __App State__
+  - __User Data__
 
-*** This chapter is quickly subject to change and modification
+
+##### [[back to Developer Navigation]](#navigation)
+
+## General
+
+### Startup
+
+1) Browser loads hosted site ([hhstore.netlify.com](http://www.hhstore.netlify.com/) or [hhstore.herokuapp.com](http://www.hhstore.herokuapp.com/))
+1) `index.html` is loaded with `manifest.json`
+1) `manifest.json` loads the main bundle of the `src` directory
+1) `index.js` is loaded and simple loads the full web app into the DOM
+1) MobX store is instantiated inside `app.js` and passed in a provider to the routed app
+1) MobX internally instantiates the service worker inside services.js
+1) The app will start to install the service worker and precache bundles.
+1) A Material UI theme instance is also instantiated and is provided to the routed app.
+1) The web app's root class, App is mounted
+2) RoutedApp is mounted and it hoists the
+
+// braden left off here.... :()
+
+
+[***This Section is OUT OF DATE and will be refactored](#application-lifecycle)
 
 ### Initalization
 
@@ -315,4 +346,216 @@ The following features are required to create the minimum viable product as requ
 1) If the component has recovered from offline failure, set `loading` and `offline` props to `false`
 1) Online and offline callbacks should be subscribed to by MobX with @autorun to allow components to quickly react to online / offline state changes.
 
-##### [[back to Developer Navigation]](#navigation)
+##### [[back to Developer Application Lifecycles]](#application-lifecycles)
+
+---
+
+## Service Worker
+
+> A Service worker is a [`persistant`]() task runner that always runs in the background of your browser even when you are offline or your tabs are closed. It is primarily responsible for allowing the application to run `offline` when there is no internet connection available. It also provides substantial network savings by `caching` assets as part of the larger [Progressive Web App]() development standards.
+
+### Responsibilities
+
+ - Initialize with page and begin caching all necessary resources needed for the [app shell]() to run offline.
+ - Iteratvely [cache less important resources]() (images, fonts, etc.) as they are needed to allow almost instantaneous reloads of site content.
+ - Register [routes for future nagivation]() as smaller bundles that don't impede the main shell's [First Paint]() & [Time to Interactive]()
+ - Handle online and offline [fetch requests]() from the web app.
+ - Manage other instances of itself and force updates based on [user controlled input]().
+
+### Registration
+
+Ordinarily, in Create React App there is a service worker that is created for you. Internally, CRA uses [workbox-webpack-plugin](), which uses the simplified [`GenerateSW()`]() function to generate a worker and place it in the `build` directory. That file is then registered by CRA's `serviceWorker.js` function in `index.js` at runtime.
+
+The `GenerateSW` function is great for getting a service worker up quickly, because it will cache every resource in your bundles and register all your routes. However, it doesn't allow you much of any fine-grained control. For instance in this app, we need to set up [custom routes](), improve performance of the app shell via [selective caching of bundles](), and utilizing IndexedDB and other packages as part of our [caching strategy](). For this we need to use workbox [`InjectManifest()`]() instead.
+
+### Template File
+
+>Uses the [`workbox-sw`]() package
+
+`InjectManifest` requires a template file to begin with. We have set up [`serviceWorkerCustom`](./src/serviceWorkerCustom.js) in the `src` directory. Inside this file you have access to the global property `self`, which is an equivalent stand-in for the `this` keyword in service workers. You can write code using `self` like normal in the [service worker documentation](). You can also utilize `workbox-sw` and implement any of their [custom strategies]() and [plugins]().
+
+```javascript
+if ('serviceWorker' in navigator) {
+    const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
+}
+```
+
+CRA is already creating service-worker.js in the `build` directory using `GenerateSW`. You need to run the workbox `injectManifest` command after the build. This will create a new `service-worker.js`, replacing the one generated by CRA. We can then register it by referencing the `PUBLIC_URL` inside the `workbox-window` registrar file .
+
+> Note: You need a workbox-config.js file in the root directory in order to use workbow injectManifest correctly. Ex:
+
+```json
+module.exports = {
+  "globDirectory": "build/",
+  "globPatterns": [
+    "**/*.{json,js,ico,html,css,svg}"
+  ],
+  "swDest": "build/service-worker.js",
+  "swSrc": "src/serviceWorkerCustom.js",
+};
+```
+
+### Registrant File
+
+
+
+>Uses the [`workbox-window`]() package
+
+The template file has now created `service-worker.js` in the `build` directory, but it needs to be registered in order to be used by the web app. The easiest way to do this is with [`workbox-window`](). Use the following code in the web app to register it:
+
+```javascript
+import { Workbox } from 'workbox-window';
+
+if ('serviceWorker' in navigator) {
+    const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
+}
+```
+
+That's it. Basically if the browser supports service workers, register it, otherwise leave it alone. The app will use the network by default and behave just an app without a service worker would if it was offline. 
+
+> Just make sure the web app knows how to handle itself when it has no cached resources and no network to connect to. Obviously it isn't going to be perfect.
+
+In the interest of keeping the service worker closely connected with the client and having the ability to notifiy them, the above code is actually registered locally in a MobX store, [`services.js`](./src/stores/services.js). Since the store is only instantiated [once](), there is no problem keeping service worker registration there. The benefit is direct access to a notification function and listeners for online & offline status:
+
+```javascript
+class ServicesStore {
+    // : Reference the parent store
+    this.root = rootStore
+
+    // : Set Listeners for Online/Offline Status
+    window.addEventListener('online', this.online);
+    window.addEventListener('offline', this.offline);
+
+    ...
+
+    // Service worker registration (code above)
+
+    ...
+
+    @action notify = (message, config) =>
+        this.enqueueSnackbar(message, config)
+
+}
+```
+
+### Event Notifications
+
+As stated earlier, we are using the [`workbox-window`]() package to create an instance, `wb`. We can attach listeners to the registered service worker for instance that notify users of updates.
+
+```javascript
+this.wb.addEventListener('installed', (event) => {
+    // A worker is being instaled for the first time
+    if (!event.isUpdate) {
+        this.notify('App can now be used offline!', { variant: 'success' });
+    }
+});
+```
+
+### User Interraction
+
+We can also prompt the user specifically to make a choice about updates when they are available. The following prompts a user to update now or later. If they choose to update, it forces the next service worker to activate and refreshes the page to claim the current client.
+
+```javascript
+wb.addEventListener('waiting', (event) => {
+    if (!event.isUpdate) {
+        this.notify('A waiting new service worker has installed (for the first time)');
+    } else if (event.isUpdate) {
+        // : A service updated worker has installed but it's stuck in the waiting phase
+        this.notify("Harvest Haven is ready to be updated", {
+            persist: true,
+            variant: 'info',
+            action: (
+              // : JSX Code for Snackbar Buttons
+            ),
+        });
+    } else { }
+});
+
+@action.bound updateAndRestart = () => {
+    this.wb.addEventListener('controlling', (event) => {
+        window.location.reload()
+    });
+    // : Send a message telling the service worker to skip waiting && claim clients.
+    // : This will trigger the newly added `controlling` event handler above.
+    this.wb.messageSW({ type: 'SKIP_WAITING' });
+```
+
+### Automatic Updates
+
+___This section is hopefully subject to change___
+
+> "Just close out of everything and restart..." _- Braden_
+
+In their default behavior, service workers don't actually activate the moment they are installed ([unless forced](#user-interraction)). They also don't check for updates on their own. Both checking for an updates and activation of installed workes does not occur unless the following conditions are met.
+
+ - The user closes out ALL tabs that are running the app and makes a clean load of the page in a new tab
+ - The user is on a mobile device and they fully close out the app. Minimization and swiping to refresh doesn't do it.
+
+> The reason for this is browing to a page for the first time gives you fresh [response headers](). Those are what identify that a new version of the site exists. The only way to get new response headers is a clean load of the page. Google states this may [change in the future]().
+
+##### [[back to Developer Application Lifecycles]](#application-lifecycles)
+
+---
+
+## Video Player
+
+### Example Implementation
+
+```javascript
+class VideoPlayer extends Component {
+
+  @observable data = null
+  @observable source = null
+  @observable variant = null
+
+  componentDidMount() {
+    const { videoID } = this.props.match.params
+
+    // : Ideal: Get data from Cache/IndexedDB 
+    fetch(`/videos/${videoID}`)
+      .then( file => {
+        this.data = file
+        this.source = 'cache'
+      })
+      .catch( err => {
+        // : REASONS FOR FAILURE:
+        // : Video is not cached
+        // : Service worker (SW) is not registered
+        // : Workbox (SW's) is/are not supported
+        // : App is 'development' not 'production'
+
+        // : Fallback: Try to obtain normally from Network
+        fetch(`https://www.youtube.com/watch?v=${videoID}`)
+          .then( stream => {
+            this.data = stream
+            this.source = 'youtube'
+          })
+          .catch( err => {
+            // : REASONS FOR FAILURE:
+            // : Network is offline
+            // : App is in 'development'
+            // : Local CORS violation
+
+            // : Fallback: User will have to reconnect to the network at a minimum
+            this.data = null
+            this.source = null
+          })
+      })
+  }
+
+  render() {
+    if (this.source === ('cache' || null )) {
+      return (
+        // Display our Custom React Video Player
+        <VideoPlayer variant={this.variant} src={this.data} />
+      )
+    } else {
+        // Display Default React Youtube Player
+        <YoutubePlayer variant={this.variant} src={this.data} />
+    }
+  }
+}
+```
+##### [[back to Developer Application Lifecycles]](#application-lifecycles)
+
+---
