@@ -31,11 +31,8 @@ const snackbarOptions = {
   },
 }
 
-const App = () =>
-  <Provider
-    forage={forage}
-    store={store}
-  >
+export default () =>
+  <Provider forage={forage} store={store} >
     <MuiThemeProvider theme={theme}>
       <SnackbarProvider {...snackbarOptions}>
         <RoutedApp />
@@ -43,7 +40,9 @@ const App = () =>
     </MuiThemeProvider>
   </Provider >
 
-@withSnackbar @inject('forage', 'store') @observer class RoutedApp extends Component {
+@hot(module) @withSnackbar 
+@inject('forage', 'store') @observer 
+class RoutedApp extends Component {
 
   componentDidMount() {
     const { services } = this.props.store
@@ -100,6 +99,3 @@ const LoadingScreen = observer(({ visible }) => (
     }
   </>
 ))
-
-export default hot(module)(App)
-// export default App
