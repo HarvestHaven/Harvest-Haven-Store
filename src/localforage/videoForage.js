@@ -105,28 +105,6 @@ export default class VideoForage {
     // expressDownloadYTVideo = async () => {
     //     console.log('attempting download via express server...');
 
-<<<<<<< Updated upstream
-
-    // }
-
-    //     // return axios.get('/download?URL=' + this.testUrl);
-    //     return axios.get(`http://localhost:4000/download?URL=${this.testUrl}`);
-    // }
-    // // FIXME: CORS error when I try this...
-    // ytdlVideo = async () => {
-    //     console.log('attempting download via ytdl...');
-    //     const stream = ytdl(this.testUrl, {
-    //         format: 'mp4'
-    //     })
-    //     // Can pipe to either a Response or a Node ReadableStream in ytdl.
-    //     // .pipe(this.$.setItem('video', ));
-    //     stream.on('end', ()=>{
-    //         console.log('Finished!')
-    //     })
-
-    // }
-
-=======
     //     // return axios.get('/download?URL=' + this.testUrl);
     //     return axios.get(`http://localhost:4000/download?URL=${this.testUrl}`);
     // }
@@ -145,7 +123,6 @@ export default class VideoForage {
 
     // }
 
->>>>>>> Stashed changes
     // // FIXME: CORS error when I try this...
     // downloadYTVideo = async () => {
     //     fetch(this.testUrl)
