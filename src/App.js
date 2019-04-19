@@ -73,6 +73,9 @@ class RoutedApp extends Component {
           <button onClick={videos.get}>Fetch</button>
           <button onClick={videos.clear}>Clear</button>
           <button onClick={videos.drop}>Drop</button>
+          {/* <button onClick={videos.downloadYTVideo}>Download</button> */}
+          {/* <button onClick={videos.expressDownloadYTVideo}>Download</button> */}
+          {/* <button onClick={videos.ytdlVideo}>Download</button> */}
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -82,6 +85,10 @@ class RoutedApp extends Component {
             Learn React Stuff
           </a>
         </header>
+
+        <body>
+            <div id="attendees"></div>
+        </body>
       </div>
     );
   }
@@ -95,3 +102,39 @@ const LoadingScreen = observer(() =>
     <h1 style={{ color: '#ec5c5c' }}>...</h1>
   </div>
 )
+
+// /** Sample fetch code - MP */
+
+
+// const attendees = document.querySelector("#attendees");
+// console.log('attendees: ', attendees);
+
+// fetch("https://jsonplaceholder.typicode.com/users")
+//     .then(response => response.json())
+//     .then(data => {
+
+//         // Actual data:
+//         console.log('users (external): ', data)
+
+//         // Sample UI code
+//         let html = '';
+//         data.forEach(user => {
+//             html +=
+//                 `<div class="card">
+//                 <h2>${user.name}</h2>
+//                 <div>${user.email}</div>
+//             </div>`
+//         });
+//         attendees.innerHTML = html;
+//     })
+
+// fetch("http://localhost:4000/download?URL=https://www.youtube.com/watch?v=i6USBe9Gr3U")
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('app -> localhost 4000 data: ', data);
+//     })
+
+
+//     // ytdl(URL, {
+//     //     format: 'mp4'
+//     // }).pipe(res);
