@@ -68,6 +68,36 @@ self.videos = localforage.createInstance({
     description: 'this is a store'
 })
 
+workbox.routing.registerRoute(
+    new RegExp('/videos/'),
+    // new RegExp('https://www.youtube.com'),
+    async ({ url, event }) => {
+        // const videoURL = url.href.match(/https:\/\/www\.youtube\.com\/watch\?v=[A-z\d]{11}/g)[0]
+        // const videoID = url.search.match(/\?v=[A-z\d]{11}/g)[0].slice(3)
+        // console.log(`Video URL: ${videoURL}`)
+        // console.log(`Video ID: ${videoID}`)
+        const videoUrl = url.href
+        self.videos.setItem(`${videoUrl}}`, videoUrl)
+            .then((value) => {
+                console.log(`Downloading ${videoUrl} from Youtube...`)
+                console.log('<3')
+                hello();
+                testscript.hello();
+
+                let stream = ytdl(videoUrl, {
+                    format: 'mp4'
+                });
+                console.log('stream: ', stream);
+
+                // console.log(`Set [${videoUrl}] as '${value}'`)
+            })
+            .catch(function (err) {
+                console.error(`Video ${videoUrl} Failed to Download`, err)
+            });
+
+        return new Response({ text: `Returned [${videoUrl}]` });
+})
+
 // : Register custom caching strategy for videos
 workbox.routing.registerRoute(
     new RegExp('/videos/'),
