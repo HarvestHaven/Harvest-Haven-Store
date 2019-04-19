@@ -17,9 +17,9 @@ export default class VideoForage {
     init = async () => {
         const that = this
         const key = 'Cat'
-        this.$.setItem('key', key)
+        this.$.setItem('video', key)
             .then(function (value) {
-                that.$.getItem('key');
+                that.$.getItem('video');
                 console.log(`Set Video [${key}] as '${value}'`)
                 // we got our value
             }).catch(function (err) {

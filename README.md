@@ -227,7 +227,7 @@ The following features are required to create the minimum viable product as requ
 - [ ] The app will need to store video content locally to be retrieved as instantaneously as possible. There should be minimimal load time for each resource.
 - [x] This will require the use of either local storage (Electron) or persistant browser storage (LocalForage)
 - [ ] Harvest Haven will have access to some features that others may not through authentication in [Firebase](), such as:
-  - [ ] Editing the manifest to update gallery contents, playlists, & video descriptions. This may be accomplished in a separate tool via [Toolbox]()
+  - [ ] Editing the manifest to update Library contents, playlists, & video descriptions. This may be accomplished in a separate tool via [Toolbox]()
   - [ ] Adjusting store-only preferences, such as color theme, font-size, display mode, and kiosk-only UI features.
   - [ ] Administrative tools for downloading the entire video library for offline use.
 > The app should first and foremost be **made to serve the owners of Harvest Haven**. Every priority will be given to them first and their request of necessary features overrides the desires of the customer to ensure that Harvest Haven has the most stable and robust version of the app.

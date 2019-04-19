@@ -7,12 +7,10 @@ import { Provider } from 'mobx-react';
 import MobxStore from './stores'
 import Forage from './localforage'
 
+import { hot } from 'react-hot-loader'
+
 const store = new MobxStore()
 const forage = new Forage()
-
-const rest = (ms) => {
-  return new Promise(r => setTimeout(r, ms));
-}
 
 const theme = createMuiTheme({
   typography: {
@@ -29,16 +27,22 @@ const snackbarOptions = {
   },
 }
 
-export const App = () =>
-  <Provider forage={forage} store={store}>
+export default () =>
+  <Provider forage={forage} store={store} >
     <MuiThemeProvider theme={theme}>
       <SnackbarProvider {...snackbarOptions}>
         <RoutedApp />
       </SnackbarProvider>
     </MuiThemeProvider>
-  </Provider>
+  </Provider >
 
-@withSnackbar @inject('forage', 'store') @observer class RoutedApp extends Component {
+
+
+@withSnackbar
+@inject('forage', 'store')
+@observer
+@hot(module)
+class RoutedApp extends Component {
 
   componentDidMount() {
     const { services } = this.props.store
@@ -60,7 +64,8 @@ export const App = () =>
     return (
       <div className="App">
         <header className="App-header">
-          <LoadingScreen visible={loader} />
+          <h1>React App</h1>
+          {loader && <LoadingScreen visible={loader} />}
           <p>
             Edit <code>src/App.jsx</code> and save to reload.
           </p>
@@ -89,18 +94,14 @@ export const App = () =>
   }
 }
 
-const LoadingScreen = observer(({ visible }) => (
-  <>
-    {visible &&
-      <div style={{
-        height: '100vh', width: '100vw', background: '#eae1c5', position: 'absolute',
-        display: 'flex', flexFlow: 'row no-wrap', justifyContent: 'center', alignItems: 'center'
-      }}>
-        <h1 style={{ color: '#ec5c5c' }}>...</h1>
-      </div>
-    }
-  </>
-))
+const LoadingScreen = observer(() =>
+  <div style={{
+    height: '100vh', width: '100vw', background: '#eae1c5', position: 'absolute',
+    display: 'flex', flexFlow: 'row no-wrap', justifyContent: 'center', alignItems: 'center'
+  }}>
+    <h1 style={{ color: '#ec5c5c' }}>...</h1>
+  </div>
+)
 
 // /** Sample fetch code - MP */
 

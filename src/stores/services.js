@@ -1,5 +1,5 @@
 import React from 'react';
-import { action, observable, computed } from 'mobx';
+import { action, observable } from 'mobx';
 import { Button } from '@material-ui/core';
 import { Workbox } from 'workbox-window';
 
@@ -21,7 +21,7 @@ export default class ServicesStore {
     @observable enqueueSnackbar = null
     @observable closeSnackbar = null
     @observable initialWorker = null
-    @observable loader = true
+    @observable loader = false
 
     constructor(rootStore) {
 
@@ -29,10 +29,10 @@ export default class ServicesStore {
         this.root = rootStore
 
         // : Turn loader on with max (other events dictate when it will turn off)
-        this.setKey('loader', true)
-
+        
         // : Register & Monitor Service Worker
-        if ('serviceWorker' in navigator) {
+        if (process.env.NODE_ENV === 'production' && 'serviceWorker' in navigator) {
+            this.setKey('loader', true)
             this.wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`)
 
             // : Check to see if we are the initial service worker and pass the result to the current SW to store
@@ -109,10 +109,6 @@ export default class ServicesStore {
             // : Register the service worker after event listeners have been added.
             this.wb.register()
 
-        } else {
-            // TODO - Actually needs tested ('development' mode is a suitable environment)
-            // : Service worker not available, proceed without
-            this.initialWorker ? this.timeoutLoader(1500) : this.timeoutLoader(0)
         }
 
         // : Set Listeners for Online/Offline Status
@@ -123,12 +119,6 @@ export default class ServicesStore {
 
     @action.bound setKey = (key, value) =>
         this[key] = value
-
-    @action timeoutLoader = async (duration) => {
-        rest(duration).then(() => {
-            this.loader = false
-        })
-    }
 
     @action.bound offline = () => {
         this.offline = this.notify('Offline mode enabled', {
