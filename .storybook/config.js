@@ -4,6 +4,10 @@ import { addParameters, storiesOf, addDecorator, configure } from '@storybook/re
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider, install } from "@material-ui/styles";
 import { muiTheme } from 'storybook-addon-material-ui';
+import { Provider } from 'mobx-react';
+import Forage from '../src/localforage'
+
+const forage = new Forage()
 
 const theme = createMuiTheme({
   palette: {
@@ -33,7 +37,9 @@ addDecorator(muiTheme())
 
 addDecorator(storyFn =>
   <ThemeProvider {...{ theme }}>
-    {storyFn()}
+    <Provider forage={forage} >
+      {storyFn()}
+    </Provider>
   </ThemeProvider>
 );
 

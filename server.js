@@ -5,7 +5,7 @@
 const express = require('express');
 const cors = require('cors');
 const ytdl = require('ytdl-core');
-const fs = require('fs');
+// const fs = require('fs');
 const app = express();
 app.use(cors());
 
@@ -36,10 +36,10 @@ app.get('/download', (req, res) => {
     return stream;
 });
 
-    ytdl(URL, {
-        format: 'mp4'
-    }).pipe(res);
-});
+//     ytdl(URL, {
+//         format: 'mp4'
+//     }).pipe(res);
+// });
 
 // Src: https://github.com/jkvora/Youtube-downloder/blob/master/server.ts
 app.get('/video', function (req, res) {

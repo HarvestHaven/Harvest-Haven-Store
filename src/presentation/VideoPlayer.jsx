@@ -8,7 +8,7 @@ import fileUrl from 'file-url'
 import axios from 'axios'
 import localForage from 'localforage';
 import Video from './video.mp4'
-// const fs = require('fs');
+// require('../../server')
 const ytdl = require('ytdl-core');
 
 var fs = require('browserify-fs');
@@ -51,35 +51,37 @@ class VideoPlayer extends Component {
 
     downloadFile = () => {
         console.log('start download')
+        // console.log(this.props)
+        this.props.forage.videos.get()
         // ytdl('http://www.youtube.com/watch?v=A02s8omM_hI')
             // .pipe(fs.createWriteStream('video.flv'));
         
-        fs.mkdir('/home', function() {
-            console.log('making directory....')
-            let res = null
+        // fs.mkdir('/home', function() {
+        //     console.log('making directory....')
+        //     let res = null
 
-            const url = 'https://www.youtube.com/watch?v=WhXefyLs-uw';
-            const output = '/home/video.mp4'
-            const video = ytdl(url);
-            let starttime;
-            video.pipe(fs.createWriteStream(output));
-            video.once('response', () => {
-                starttime = Date.now();
-            });
-            video.on('progress', (chunkLength, downloaded, total) => {
-                const percent = downloaded / total;
-                const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
-                readline.cursorTo(process.stdout, 0);
-                process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`);
-                process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`);
-                process.stdout.write(`running for: ${downloadedMinutes.toFixed(2)}minutes`);
-                process.stdout.write(`, estimated time left: ${(downloadedMinutes / percent - downloadedMinutes).toFixed(2)}minutes `);
-                readline.moveCursor(process.stdout, 0, -1);
-                console.log('percent', percent)
-            });
-            video.on('end', () => {
-                process.stdout.write('\n\n');
-            });   
+        //     const url = 'https://www.youtube.com/watch?v=WhXefyLs-uw';
+        //     const output = '/home/video.mp4'
+        //     const video = ytdl(url);
+        //     let starttime;
+        //     video.pipe(fs.createWriteStream(output));
+        //     video.once('response', () => {
+        //         starttime = Date.now();
+        //     });
+        //     video.on('progress', (chunkLength, downloaded, total) => {
+        //         const percent = downloaded / total;
+        //         const downloadedMinutes = (Date.now() - starttime) / 1000 / 60;
+        //         readline.cursorTo(process.stdout, 0);
+        //         process.stdout.write(`${(percent * 100).toFixed(2)}% downloaded`);
+        //         process.stdout.write(`(${(downloaded / 1024 / 1024).toFixed(2)}MB of ${(total / 1024 / 1024).toFixed(2)}MB)\n`);
+        //         process.stdout.write(`running for: ${downloadedMinutes.toFixed(2)}minutes`);
+        //         process.stdout.write(`, estimated time left: ${(downloadedMinutes / percent - downloadedMinutes).toFixed(2)}minutes `);
+        //         readline.moveCursor(process.stdout, 0, -1);
+        //         console.log('percent', percent)
+        //     });
+        //     video.on('end', () => {
+        //         process.stdout.write('\n\n');
+        //     });   
                 // ytdl.getInfo('A02s8omM_hI', (err, info) => {
                 //     if (err) throw err;
                 //     let format = ytdl.chooseFormat(info.formats, { quality: '134' });
@@ -97,7 +99,7 @@ class VideoPlayer extends Component {
             //     });
             // }, 5000)
             // });
-        });
+        // });
     }
 
     onChooseFile = e => {
@@ -145,7 +147,7 @@ class VideoPlayer extends Component {
     }
 }
 
-export default decorate(
+export default inject('forage')(decorate(
     VideoPlayer, {
         cat: observable
-    })
+    }))
