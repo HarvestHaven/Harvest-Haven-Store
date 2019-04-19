@@ -1,42 +1,82 @@
 import React from 'react';
-import { action, observable } from 'mobx';
+import { action, observable, computed } from 'mobx';
 import { Button } from '@material-ui/core';
 import { Workbox } from 'workbox-window';
 
+const rest = (ms) => {
+    return new Promise(r => setTimeout(r, ms));
+}
+
+// : Get a max timeout clock to guarenteed consistent loading screen times
+let loaderStartTime = Date.now();
+let loadTimeRemaining = 0
+let loaderCounter = setInterval(function () {
+    loadTimeRemaining = 1500 - (Date.now() - loaderStartTime).toFixed(3)
+}, 100);
+setTimeout(() => clearInterval(loaderCounter), 1000)
+
+// : Main Class. Manages service-related UI state, notifications and the registration of service workers.
 export default class ServicesStore {
 
     @observable enqueueSnackbar = null
     @observable closeSnackbar = null
+    @observable initialWorker = null
+    @observable loader = true
 
     constructor(rootStore) {
 
         // : Reference the parent store
         this.root = rootStore
 
-        // : Set Listeners for Online/Offline Status
-        window.addEventListener('online', this.online);
-        window.addEventListener('offline', this.offline);
+        // : Turn loader on with max (other events dictate when it will turn off)
+        this.setKey('loader', true)
 
         // : Register & Monitor Service Worker
         if ('serviceWorker' in navigator) {
-            const wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`);
+            this.wb = new Workbox(`${process.env.PUBLIC_URL}/service-worker.js`)
 
-            console.log('More push tests')
+            // : Check to see if we are the initial service worker and pass the result to the current SW to store
+            navigator.serviceWorker.getRegistrations().then(registrations => {
+                const initialWorker = !registrations.length
+                this.wb.messageSW({ type: 'SET_INITIAL', payload: initialWorker })
+            })
 
-            wb.addEventListener('installed', (event) => {
-                if (!event.isUpdate) {
-                    this.notify('App can now be used offline!', { variant: 'success' });
-                    // window.location.reload()
-                } else if (event.isUpdate) {
-                    this.notify('A new service worker has installed (updating a previous one)');
-                } else { }
+            // : Check our refresh and initial worker to set the loading screen and update status
+            this.wb.messageSW({ type: 'GET_REFRESHED' }).then(data => {
+                this.refreshed = data.payload.refreshed
+                this.initialWorker = data.payload.initialWorker
+                rest(loadTimeRemaining).then(() => {
+                    if (this.refreshed) {
+                        rest(1500).then(() => {
+                            this.setKey('loader', false)
+                            if (this.initialWorker) {
+                                this.notify('App can now be used offline!', { variant: 'success' })
+                            } else {
+                                this.notify('App updated successfully!', { variant: 'success' })
+                            }
+                        })
+                    } else {
+                        this.setKey('loader', false)
+                    }
+                })
+            })
+
+            // : An updated service worker was installed, set a key to notify the user on the next refresh
+            this.wb.addEventListener('installed', (event) => {
+                if (event.isUpdate) {
+                    this.wb.messageSW({ type: 'SET_REFRESHED', payload: true })
+                    this.initialWorker = false
+                }
             });
 
-            wb.addEventListener('waiting', (event) => {
+            // : An updated service worker was installed
+            this.wb.addEventListener('waiting', (event) => {
+                // : This is the initial service worker. Claim it to start controlling the page
                 if (!event.isUpdate) {
-                    this.notify('A waiting new service worker has installed (for the first time)');
-                } else if (event.isUpdate) {
-                    // : A service updated worker has installed but it's stuck in the waiting phase
+                    this.wb.messageSW({ type: 'CLIENTS_CLAIM' })
+                }
+                // : This is an updated service worker. It is not claimed and is waiting for user confirmation
+                if (event.isUpdate) {
                     this.notify("Harvest Haven is ready to be updated", {
                         persist: true,
                         variant: 'info',
@@ -47,32 +87,47 @@ export default class ServicesStore {
                             </>
                         ),
                     });
-                } else { }
-            });
+                    window.addEventListener('beforeunload', (event) => {
+                        this.wb.messageSW({ type: 'SKIP_WAITING' });
+                    })
+                }
+            })
 
-            wb.addEventListener('controlling', (event) => {
+            // : The initial worker needs force a page reload after clients.claim() and skipWaiting() were called ealier
+            this.wb.addEventListener('activated', async (event) => {
                 if (!event.isUpdate) {
-                    this.notify('The service worker has started controlling the page (for the first time)');
-                } else if (event.isUpdate) {
-                    this.notify('The updated service worker has started controlling the page and cake');
-                } else { }
-            });
-
-            wb.addEventListener('activated', (event) => {
-                if (!event.isUpdate) {
-                    this.notify('The service worker has finished activating (for the first time) & This app is now available offline');
+                    this.wb.messageSW({ type: 'SET_REFRESHED', payload: true })
                     window.location.reload()
-                } else if (event.isUpdate) {
-                    this.notify('The updated service worker has finished activating & This app was updated and is available without internet');
-                } else { }
-            });
+                }
+            })
+
+            // : A new service worker in another tab on the same domain activated, refresh this worker to match
+            this.wb.addEventListener('externalactivated', async (event) => {
+                window.location.reload()
+            })
 
             // : Register the service worker after event listeners have been added.
-            wb.register();
-            this.wb = wb
+            this.wb.register()
 
+        } else {
+            // TODO - Actually needs tested ('development' mode is a suitable environment)
+            // : Service worker not available, proceed without
+            this.initialWorker ? this.timeoutLoader(1500) : this.timeoutLoader(0)
         }
 
+        // : Set Listeners for Online/Offline Status
+        window.addEventListener('online', this.online);
+        window.addEventListener('offline', this.offline);
+
+    }
+
+    @action.bound setKey = (key, value) =>
+        this[key] = value
+
+    @action timeoutLoader = async (duration) => {
+        rest(duration).then(() => {
+            this.loader = false
+        })
     }
 
     @action.bound offline = () => {
@@ -108,6 +163,8 @@ export default class ServicesStore {
     }
 
     @action notify = (message, config) =>
-        this.enqueueSnackbar(message, config)
+        this.enqueueSnackbar(message, {
+            ...config,
+        })
 
 }

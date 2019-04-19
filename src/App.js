@@ -1,18 +1,18 @@
 import './App.css';
 import React, { Component } from 'react';
-import logo from './logo.svg';
-
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
 import { SnackbarProvider, withSnackbar } from 'notistack';
+import { inject, observer } from 'mobx-react'
 import { Provider } from 'mobx-react';
 import MobxStore from './stores'
 import Forage from './localforage'
 
-import { inject, observer } from 'mobx-react'
-import { observable, action } from 'mobx'
-
 const store = new MobxStore()
 const forage = new Forage()
+
+const rest = (ms) => {
+  return new Promise(r => setTimeout(r, ms));
+}
 
 const theme = createMuiTheme({
   typography: {
@@ -22,10 +22,11 @@ const theme = createMuiTheme({
 
 const snackbarOptions = {
   maxSnack: 3,
+  disableWindowBlurListener: true,
   anchorOrigin: {
     vertical: 'bottom',
     horizontal: 'center',
-  }
+  },
 }
 
 export const App = () =>
@@ -37,7 +38,7 @@ export const App = () =>
     </MuiThemeProvider>
   </Provider>
 
-@inject('forage', 'store') @withSnackbar class RoutedApp extends Component {
+@withSnackbar @inject('forage', 'store') @observer class RoutedApp extends Component {
 
   componentDidMount() {
     const { services } = this.props.store
@@ -48,21 +49,22 @@ export const App = () =>
 
     // : Initialize the localforage session for videos
     this.props.forage.videos.init()
-    console.log('good! stufing stufings and ff')
   }
 
   render() {
+    const { services } = this.props.store
     const { forage } = this.props
     const { videos } = forage
-    console.log('props')
-    console.log(this.props)
+    const { loader } = services
+
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
+          <LoadingScreen visible={loader} />
           <p>
-            Edit <code>src/App.js</code> and save to reload.
+            Edit <code>src/App.jsx</code> and save to reload.
           </p>
+          <button onClick={this.toggle}>Toggle</button>
           <button onClick={videos.get}>Fetch</button>
           <button onClick={videos.clear}>Clear</button>
           <button onClick={videos.drop}>Drop</button>
@@ -75,7 +77,7 @@ export const App = () =>
             target="_blank"
             rel="noopener noreferrer"
           >
-            Learn React
+            Learn React Stuff
           </a>
         </header>
 
@@ -87,38 +89,51 @@ export const App = () =>
   }
 }
 
-/** Sample fetch code - MP */
+const LoadingScreen = observer(({ visible }) => (
+  <>
+    {visible &&
+      <div style={{
+        height: '100vh', width: '100vw', background: '#eae1c5', position: 'absolute',
+        display: 'flex', flexFlow: 'row no-wrap', justifyContent: 'center', alignItems: 'center'
+      }}>
+        <h1 style={{ color: '#ec5c5c' }}>...</h1>
+      </div>
+    }
+  </>
+))
+
+// /** Sample fetch code - MP */
 
 
-const attendees = document.querySelector("#attendees");
-console.log('attendees: ', attendees);
+// const attendees = document.querySelector("#attendees");
+// console.log('attendees: ', attendees);
 
-fetch("https://jsonplaceholder.typicode.com/users")
-    .then(response => response.json())
-    .then(data => {
+// fetch("https://jsonplaceholder.typicode.com/users")
+//     .then(response => response.json())
+//     .then(data => {
 
-        // Actual data:
-        console.log('users (external): ', data)
+//         // Actual data:
+//         console.log('users (external): ', data)
 
-        // Sample UI code
-        let html = '';
-        data.forEach(user => {
-            html +=
-                `<div class="card">
-                <h2>${user.name}</h2>
-                <div>${user.email}</div>
-            </div>`
-        });
-        attendees.innerHTML = html;
-    })
+//         // Sample UI code
+//         let html = '';
+//         data.forEach(user => {
+//             html +=
+//                 `<div class="card">
+//                 <h2>${user.name}</h2>
+//                 <div>${user.email}</div>
+//             </div>`
+//         });
+//         attendees.innerHTML = html;
+//     })
 
-fetch("http://localhost:4000/download?URL=https://www.youtube.com/watch?v=i6USBe9Gr3U")
-    .then(response => response.json())
-    .then(data => {
-        console.log('app -> localhost 4000 data: ', data);
-    })
+// fetch("http://localhost:4000/download?URL=https://www.youtube.com/watch?v=i6USBe9Gr3U")
+//     .then(response => response.json())
+//     .then(data => {
+//         console.log('app -> localhost 4000 data: ', data);
+//     })
 
 
-    // ytdl(URL, {
-    //     format: 'mp4'
-    // }).pipe(res);
+//     // ytdl(URL, {
+//     //     format: 'mp4'
+//     // }).pipe(res);
