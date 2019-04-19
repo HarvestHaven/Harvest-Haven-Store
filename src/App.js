@@ -1,18 +1,39 @@
 import './App.css';
 import React, { Component } from 'react';
 import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import { ThemeProvider, install } from "@material-ui/styles";
 import { SnackbarProvider, withSnackbar } from 'notistack';
 import { inject, observer } from 'mobx-react'
 import { Provider } from 'mobx-react';
 import MobxStore from './stores'
 import Forage from './localforage'
+import { BrowserRouter as Router, Link, Route, Redirect, Switch, withRouter } from 'react-router-dom'
 
 import { hot } from 'react-hot-loader'
+import LibraryContainer from './container/LibraryContainer';
 
 const store = new MobxStore()
 const forage = new Forage()
 
 const theme = createMuiTheme({
+  palette: {
+    primary: {
+      light: '#757ce8',
+      main: '#cddc39',
+      dark: '#002884',
+      contrastText: '#fff',
+    },
+    secondary: {
+      light: '#ff7961',
+      main: '#f44336',
+      dark: '#ba000d',
+      contrastText: '#000',
+    },
+    background: {
+      default: '#ede5da'
+      // default: '#313439'
+    }
+  },
   typography: {
     useNextVariants: true,
   },
@@ -29,14 +50,12 @@ const snackbarOptions = {
 
 export default () =>
   <Provider forage={forage} store={store} >
-    <MuiThemeProvider theme={theme}>
+    <ThemeProvider {...{ theme }}>
       <SnackbarProvider {...snackbarOptions}>
         <RoutedApp />
       </SnackbarProvider>
-    </MuiThemeProvider>
+    </ThemeProvider>
   </Provider >
-
-
 
 @withSnackbar
 @inject('forage', 'store')
@@ -62,34 +81,14 @@ class RoutedApp extends Component {
     const { loader } = services
 
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1>React App</h1>
-          {loader && <LoadingScreen visible={loader} />}
-          <p>
-            Edit <code>src/App.jsx</code> and save to reload.
-          </p>
-          <button onClick={this.toggle}>Toggle</button>
-          <button onClick={videos.get}>Fetch</button>
-          <button onClick={videos.clear}>Clear</button>
-          <button onClick={videos.drop}>Drop</button>
-          {/* <button onClick={videos.downloadYTVideo}>Download</button> */}
-          {/* <button onClick={videos.expressDownloadYTVideo}>Download</button> */}
-          {/* <button onClick={videos.ytdlVideo}>Download</button> */}
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React Stuff
-          </a>
-        </header>
-
-        <body>
-            <div id="attendees"></div>
-        </body>
-      </div>
+      <Router>
+        <LinkOverlay />
+        <Switch>
+          <Route exact path={`/`} render={() => <h1>Home</h1>} />
+          <Route path={`/library/:category`} children={() => <LibraryContainer />} />
+          <Route render={() => <h1>404 Page</h1>} />
+        </Switch>
+      </Router>
     );
   }
 }
@@ -101,6 +100,20 @@ const LoadingScreen = observer(() =>
   }}>
     <h1 style={{ color: '#ec5c5c' }}>...</h1>
   </div>
+)
+
+const LinkOverlay = observer(() =>
+  <ul style={{
+    position: 'fixed', bottom: 0, zIndex: 9999, right: 20, padding: 10, borderRadius: 4, boxShadow: '0px 1px 5px 0px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 3px 1px -2px rgba(0, 0, 0, 0.12)', listStylePosition: "inside", background: 'lightgrey', paddingTop: 0, paddingBottom: 0, fontSize: 12,
+  }}>
+    <li><Link to="/">/</Link></li>
+    <li><Link to="/library">/Library</Link></li>
+    <li><Link to="/library/all">/Library/all</Link></li>
+    <li><Link to="/library/eggs">/Library/eggs</Link></li>
+    <li><Link to="/library/eggs/fLjslMtjkhs">/Library/eggs/fLjslMtjkhs</Link></li>
+    <li><Link to="/library/eggs/fLjslMtjkhs/fullscreen">/Library/eggs/fLjslMtjkhs/fullscreen</Link></li>
+    <li><Link to="/splash">/Splash</Link></li>
+  </ul>
 )
 
 // /** Sample fetch code - MP */

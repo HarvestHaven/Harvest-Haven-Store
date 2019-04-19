@@ -1,6 +1,7 @@
 import React from 'react';
 import '@storybook/addon-console';
 import { addParameters, storiesOf, addDecorator, configure } from '@storybook/react';
+import StoryRouter from 'storybook-react-router';
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider, install } from "@material-ui/styles";
 import { muiTheme } from 'storybook-addon-material-ui';
@@ -34,6 +35,8 @@ const theme = createMuiTheme({
 });
 
 addDecorator(muiTheme())
+
+addDecorator(StoryRouter())
 
 addDecorator(storyFn =>
   <ThemeProvider {...{ theme }}>

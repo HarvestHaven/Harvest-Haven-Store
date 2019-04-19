@@ -8,10 +8,11 @@ import { Card, Checkbox, CardActionArea, CardActions, CardMedia, Button, CardCon
 import { observable } from "mobx";
 import { observer } from "mobx-react";
 import Box from './Box'
+import { BrowserRouter, Link, Route, Redirect, Switch, withRouter } from 'react-router-dom'
 
 install();
 
-const App = observer(({ variant, title, description, id }) =>
+const VideoCard = observer(({ variant, title, description, id }) =>
   <Box
     // bgcolor="background.paper"
     width={{ sm: '100%', md: 480, }}
@@ -20,15 +21,17 @@ const App = observer(({ variant, title, description, id }) =>
     borderRadius={12} boxShadow={1}
     style={{ overflow: 'hidden', background: 'linear-gradient(to right, #36353c 0%,#52555a 100%,#7db9e8 100%)', margin: 20 }}
   >
-    <VideoCardImage {...{ id, variant }} />
-    <Box display="flex" flexDirection="column" p={2} >
-      <VideoCardTitle {...{ title }} />
-      {/* <VideoCardDescription {...{ description }} /> */}
-    </Box>
+    <Link to={`/library/eggs/${id}`}>
+      <VideoCardImage {...{ id, variant }} />
+      <Box display="flex" flexDirection="column" p={2} >
+        <VideoCardTitle {...{ title }} />
+        {/* <VideoCardDescription {...{ description }} /> */}
+      </Box>
+    </Link>
   </Box>
 )
 
-export default App
+export default VideoCard
 
 const VideoCardImage = observer(({ id, variant }) =>
   <Box

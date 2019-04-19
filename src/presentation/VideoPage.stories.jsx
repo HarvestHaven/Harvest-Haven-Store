@@ -9,6 +9,11 @@ import catalog from '../config/catalog'
 const items = new Object(Array(12))
 items.fill('')
 
+const match = {
+  params: {
+    id: 'fLjslMtjkhs'
+  }
+}
 storiesOf('VideoPage', module)
   .add('empty', () => <VideoPage />)
-  .add('with id', () => <VideoPage id="fLjslMtjkhs" />)
+  .add('with id', () => <VideoPage {...{ match }} />)
