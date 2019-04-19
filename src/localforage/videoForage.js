@@ -1,5 +1,4 @@
 import axios from 'axios';
-
 export default class VideoForage {
 
     constructor(localForage) {
@@ -13,9 +12,9 @@ export default class VideoForage {
         // console.log(this.$)
         const that = this
         const key = 'Cat'
-        this.$.setItem('key', key)
+        this.$.setItem('video', key)
             .then(function (value) {
-                that.$.getItem('key');
+                that.$.getItem('video');
                 console.log(`Set Video [${key}] as '${value}'`)
                 // we got our value
             }).catch(function (err) {
