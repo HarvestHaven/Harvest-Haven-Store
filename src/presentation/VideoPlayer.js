@@ -47,15 +47,16 @@ class VideoPlayer extends Component {
         console.log(`https://www.youtube.com/watch?v=${id}`)
         return (
             <>
-                <input onChange={this.onChooseFile} type='file' />
-                <button onClick={this.downloadFile} >Download Blob</button>
+                {/* <input onChange={this.onChooseFile} type='file' />
+                <button onClick={this.downloadFile} >Download Blob</button> */}
                 <ReactPlayer
                     ref={this.ref}
                     // url={this.state.url}
                     url={`https://www.youtube.com/watch?v=${id}`}
+                    // url={`https://www.youtube.com/watch?v=fLjslMtjkhs`}
                     playing={true}
                     // autoPlay={true}
-                    muted={true}
+                    // muted={false}
                     width="100%"
                     height="100%"
                     controls={true}
